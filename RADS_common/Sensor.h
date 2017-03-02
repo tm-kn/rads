@@ -1,7 +1,9 @@
-#pragma once
-ref class Sensor
-{
-public:
-	Sensor();
-};
+#pragma
 
+namespace Readings {
+	class Sensor
+	{
+	public:
+		Sensor();
+	};
+}

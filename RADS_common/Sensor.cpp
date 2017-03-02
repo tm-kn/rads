@@ -1,7 +1,7 @@
 #include "Sensor.h"
 
-
-
-Sensor::Sensor()
-{
+namespace Readings {
+	Sensor::Sensor()
+	{
+	}
 }
