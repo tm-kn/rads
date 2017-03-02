@@ -35,8 +35,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F9F1D496-DECB-42D9-8EEF-D7C67AF93CBD}</ProjectGuid>
-    <RootNamespace>RADS_client</RootNamespace>
+    <ProjectGuid>{CEF1961C-8953-4563-964C-397540640B00}</ProjectGuid>
+    <RootNamespace>RADS_server</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -198,7 +198,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RADS_client.cpp" />
+    <ClCompile Include="RADS_server.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
