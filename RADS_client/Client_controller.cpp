@@ -2,6 +2,7 @@
 #include <msclr\marshal_cppstd.h>
 
 #include "Client_controller.h"
+#include "../RADS_common/Fuel_level_reader.h"
 #include "../RADS_common/GPS_position_reader.h"
 #include "../RADS_common/Sensor.h"
 #include "../RADS_common/Sensor_reader.h"
@@ -10,6 +11,7 @@
 using std::cout;
 using std::endl;
 
+using Readings::Fuel_level::Fuel_level_reader;
 using Readings::GPS_position::GPS_position_reader;
 using Readings::Sensor;
 using Readings::Sensor_reader;
@@ -20,6 +22,7 @@ namespace RADS_client {
 	{
 		this->sensor_readers.push_back(new GPS_position_reader());
 		this->sensor_readers.push_back(new Temperature_sensor_reader());
+		this->sensor_readers.push_back(new Fuel_level_reader());
 	}
 
 

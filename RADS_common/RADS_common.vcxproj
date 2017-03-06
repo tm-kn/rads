@@ -193,6 +193,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Fuel_level.h" />
+    <ClInclude Include="Fuel_level_reader.h" />
     <ClInclude Include="GPS_position.h" />
     <ClInclude Include="GPS_position_reader.h" />
     <ClInclude Include="Sensor.h" />
@@ -201,6 +203,8 @@
     <ClInclude Include="Temperature_sensor_reader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Fuel_level.cpp" />
+    <ClCompile Include="Fuel_level_reader.cpp" />
     <ClCompile Include="GPS_position.cpp" />
     <ClCompile Include="GPS_position_reader.cpp" />
     <ClCompile Include="Sensor.cpp" />
