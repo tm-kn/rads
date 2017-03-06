@@ -199,6 +199,8 @@
     <ClInclude Include="GPS_position_reader.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Sensor_reader.h" />
+    <ClInclude Include="Speed.h" />
+    <ClInclude Include="Speed_reader.h" />
     <ClInclude Include="Temperature.h" />
     <ClInclude Include="Temperature_sensor_reader.h" />
   </ItemGroup>
@@ -209,6 +211,8 @@
     <ClCompile Include="GPS_position_reader.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="Sensor_reader.cpp" />
+    <ClCompile Include="Speed.cpp" />
+    <ClCompile Include="Speed_reader.cpp" />
     <ClCompile Include="Temperature.cpp" />
     <ClCompile Include="Temperature_sensor_reader.cpp" />
   </ItemGroup>

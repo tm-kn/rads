@@ -6,6 +6,7 @@
 #include "../RADS_common/GPS_position_reader.h"
 #include "../RADS_common/Sensor.h"
 #include "../RADS_common/Sensor_reader.h"
+#include "../RADS_common/Speed_reader.h"
 #include "../RADS_common/Temperature_sensor_reader.h"
 
 using std::cout;
@@ -15,6 +16,7 @@ using Readings::Fuel_level::Fuel_level_reader;
 using Readings::GPS_position::GPS_position_reader;
 using Readings::Sensor;
 using Readings::Sensor_reader;
+using Readings::Speed::Speed_reader;
 using Readings::Temperature::Temperature_sensor_reader;
 
 namespace RADS_client {
@@ -23,6 +25,7 @@ namespace RADS_client {
 		this->sensor_readers.push_back(new GPS_position_reader());
 		this->sensor_readers.push_back(new Temperature_sensor_reader());
 		this->sensor_readers.push_back(new Fuel_level_reader());
+		this->sensor_readers.push_back(new Speed_reader());
 	}
 
 
