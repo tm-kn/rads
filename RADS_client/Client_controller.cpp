@@ -1,4 +1,5 @@
 #include <iostream>
+#include <msclr\marshal_cppstd.h>
 
 #include "Client_controller.h"
 #include "../RADS_common/GPS_position_reader.h"
@@ -50,7 +51,11 @@ namespace RADS_client {
 		for (Sensor_reader *sensor_reader : this->sensor_readers) {
 			cout << sensor_reader->get_sensor_reader_name() << endl;
 			for (Sensor *sensor : sensor_reader->getReadings()) {
-				cout << sensor->to_string() << endl;
+				// Convert date
+				msclr::interop::marshal_context context;
+				string datetime = context.marshal_as<std::string>(sensor->get_datetime().ToString());
+
+				cout << "[" << datetime << "] " << sensor->to_string() << endl;
 			}
 		}
 	}

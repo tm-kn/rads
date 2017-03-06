@@ -10,6 +10,7 @@ namespace Readings {
 	{
 	public:
 		Sensor();
+		DateTime get_datetime();
 		virtual string to_string() = 0;
 	private:
 		DateTime *datetime;
