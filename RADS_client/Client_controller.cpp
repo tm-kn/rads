@@ -4,6 +4,7 @@
 #include "../RADS_common/GPS_position_reader.h"
 #include "../RADS_common/Sensor.h"
 #include "../RADS_common/Sensor_reader.h"
+#include "../RADS_common/Temperature_sensor_reader.h"
 
 using std::cout;
 using std::endl;
@@ -11,11 +12,13 @@ using std::endl;
 using Readings::GPS_position::GPS_position_reader;
 using Readings::Sensor;
 using Readings::Sensor_reader;
+using Readings::Temperature::Temperature_sensor_reader;
 
 namespace RADS_client {
 	Client_controller::Client_controller()
 	{
 		this->sensor_readers.push_back(new GPS_position_reader());
+		this->sensor_readers.push_back(new Temperature_sensor_reader());
 	}
 
 

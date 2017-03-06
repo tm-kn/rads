@@ -197,12 +197,16 @@
     <ClInclude Include="GPS_position_reader.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Sensor_reader.h" />
+    <ClInclude Include="Temperature.h" />
+    <ClInclude Include="Temperature_sensor_reader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GPS_position.cpp" />
     <ClCompile Include="GPS_position_reader.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="Sensor_reader.cpp" />
+    <ClCompile Include="Temperature.cpp" />
+    <ClCompile Include="Temperature_sensor_reader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

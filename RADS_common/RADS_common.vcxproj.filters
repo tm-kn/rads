@@ -27,6 +27,12 @@
     <ClInclude Include="GPS_position.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Temperature_sensor_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temperature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sensor.cpp">
@@ -39,6 +45,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GPS_position.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Temperature_sensor_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Temperature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
