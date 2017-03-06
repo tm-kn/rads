@@ -18,9 +18,27 @@
     <ClInclude Include="Sensor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sensor_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GPS_position_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GPS_position.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sensor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sensor_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GPS_position_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GPS_position.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
