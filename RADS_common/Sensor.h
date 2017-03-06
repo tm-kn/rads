@@ -1,18 +1,20 @@
 #pragma once
 
+#include <ctime>
 #include <string>
 
 using std::string;
-using System::DateTime;
+using std::time;
+using std::time_t;
 
 namespace Readings {
 	class Sensor
 	{
 	public:
 		Sensor();
-		DateTime get_datetime();
+		time_t get_datetime();
 		virtual string to_string() = 0;
 	private:
-		DateTime *datetime;
+		time_t datetime;
 	};
 }
