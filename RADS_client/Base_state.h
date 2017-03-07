@@ -15,7 +15,7 @@ namespace RADS_client {
 			void set_client_controller(Client_controller* client_controller);
 			virtual void perform() = 0;
 		private:
-			Client_controller* client_controller;
+			Client_controller* client_controller = NULL;
 		};
 	}
 }

@@ -1,8 +1,6 @@
 #include <ctime>
 #include <exception>
-#include <unordered_map>
 #include <iostream>
-#include <thread>
 
 #include "Client_controller.h"
 #include "Base_state.h";
@@ -19,9 +17,6 @@
 using std::cout;
 using std::endl;
 using std::logic_error;
-using std::unordered_map;
-using std::pair;
-using std::thread;
 
 using Readings::Fuel_level::Fuel_level_reader;
 using Readings::GPS_position::GPS_position_reader;
@@ -48,11 +43,11 @@ namespace RADS_client {
 	void Client_controller::perform() {
 		State::Base* state = NULL;
 
-		switch (this->current_state_id) {
-		case STATE_READING:
+		switch (this->current_state) {
+		case READING:
 			state = new State::Reading();
 			break;
-		case STATE_CONNECTING:
+		case CONNECTING:
 			state = new State::Connecting();
 			break;
 		default:
@@ -65,13 +60,13 @@ namespace RADS_client {
 
 	void Client_controller::start_communicating()
 	{
-		this->set_state(STATE_CONNECTING);
+		this->set_state(CONNECTING);
 		this->perform();
 	}
 
 	void Client_controller::start_reading()
 	{
-		this->set_state(STATE_READING);
+		this->set_state(READING);
 		this->perform();
 	}
 
@@ -101,7 +96,7 @@ namespace RADS_client {
 		return new Reading_data(min_time, max_time, data);
 	}
 
-	void Client_controller::set_state(int state) {
-		this->current_state_id = state;
+	void Client_controller::set_state(Client_controller_state state) {
+		this->current_state = state;
 	}
 }

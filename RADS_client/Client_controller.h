@@ -13,11 +13,7 @@ namespace RADS_client {
 	class Client_controller
 	{
 	public:
-		static const int STATE_READING = 1;
-		static const int STATE_CONNECTING = 2;
-		static const int STATE_SENDING = 3;
-		static const int STATE_ERROR = 4;
-
+		enum Client_controller_state { READING, CONNECTING, SENDING, ERROR };
 		Client_controller();
 		~Client_controller();
 		Reading_data* get_reading_data();
@@ -26,9 +22,9 @@ namespace RADS_client {
 		void start_reading();
 		void perform();
 	private:
-		void set_state(int state);
+		void set_state(Client_controller_state state);
 		vector<Sensor_reader*> sensor_readers;
 		int transmission_frequency;
-		int current_state_id;
+		Client_controller_state current_state;
 	};
 }
