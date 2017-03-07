@@ -206,9 +206,13 @@
   <ItemGroup>
     <ClCompile Include="Client_controller.cpp" />
     <ClCompile Include="RADS_client.cpp" />
+    <ClCompile Include="Reading_state.cpp" />
+    <ClCompile Include="Base_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client_controller.h" />
+    <ClInclude Include="Reading_state.h" />
+    <ClInclude Include="Base_state.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
