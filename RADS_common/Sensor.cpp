@@ -9,15 +9,15 @@ using std::time;
 using std::time_t;
 
 namespace Readings {
-	Sensor::Sensor() {
-		this->datetime = std::time(NULL);
-	}
+    Sensor::Sensor() {
+        this->datetime = std::time(NULL);
+    }
 
-	string Sensor::to_string() {
-		return "Unknown sensor";
-	}
+    string Sensor::to_string() {
+        return "Unknown sensor";
+    }
 
-	time_t Sensor::get_datetime() {
-		return this->datetime;
-	}
+    time_t Sensor::get_datetime() {
+        return this->datetime;
+    }
 }

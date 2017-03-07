@@ -27,76 +27,76 @@ using Readings::Speed::Speed_reader;
 using Readings::Temperature::Temperature_sensor_reader;
 
 namespace RADS_client {
-	Client_controller::Client_controller()
-	{
-		// Multiple readers of the same type allowed
-		this->sensor_readers.push_back(new GPS_position_reader());
-		this->sensor_readers.push_back(new Temperature_sensor_reader());
-		this->sensor_readers.push_back(new Fuel_level_reader());
-		this->sensor_readers.push_back(new Speed_reader());
-	}
+    Client_controller::Client_controller()
+    {
+        // Multiple readers of the same type allowed
+        this->sensor_readers.push_back(new GPS_position_reader());
+        this->sensor_readers.push_back(new Temperature_sensor_reader());
+        this->sensor_readers.push_back(new Fuel_level_reader());
+        this->sensor_readers.push_back(new Speed_reader());
+    }
 
-	Client_controller::~Client_controller()
-	{
-	}
+    Client_controller::~Client_controller()
+    {
+    }
 
-	void Client_controller::perform() {
-		State::Base* state = NULL;
+    void Client_controller::perform() {
+        State::Base* state = NULL;
 
-		switch (this->current_state) {
-		case READING:
-			state = new State::Reading();
-			break;
-		case CONNECTING:
-			state = new State::Connecting();
-			break;
-		default:
-			throw logic_error("Client controller is in not-existent state");
-		}
+        switch (this->current_state) {
+        case READING:
+            state = new State::Reading();
+            break;
+        case CONNECTING:
+            state = new State::Connecting();
+            break;
+        default:
+            throw logic_error("Client controller is in not-existent state");
+        }
 
-		state->set_client_controller(this);
-		state->perform();
-	}
+        state->set_client_controller(this);
+        state->perform();
+    }
 
-	void Client_controller::start_communicating()
-	{
-		this->set_state(CONNECTING);
-		this->perform();
-	}
+    void Client_controller::start_communicating()
+    {
+        this->set_state(CONNECTING);
+        this->perform();
+    }
 
-	void Client_controller::start_reading()
-	{
-		this->set_state(READING);
-		this->perform();
-	}
+    void Client_controller::start_reading()
+    {
+        this->set_state(READING);
+        this->perform();
+    }
 
-	vector<Sensor_reader*> Client_controller::get_sensor_readers() {
-		return this->sensor_readers;
-	}
+    vector<Sensor_reader*> Client_controller::get_sensor_readers() {
+        return this->sensor_readers;
+    }
 
-	Reading_data* Client_controller::get_reading_data() {
-		vector<Sensor*> data;
-		time_t min_time = 0;
-		time_t max_time = 0;
+    Reading_data* Client_controller::get_reading_data() {
+        vector<Sensor*> data;
+        time_t min_time = 0;
+        time_t max_time = 0;
 
-		for (Sensor_reader *sensor_reader : this->sensor_readers) {
-			for (Sensor *sensor : sensor_reader->getReadings()) {
-				if (!min_time || sensor->get_datetime() < min_time) {
-					min_time = sensor->get_datetime();
-				}
+        for (Sensor_reader *sensor_reader : this->sensor_readers) {
+            for (Sensor *sensor : sensor_reader->getReadings()) {
+                if (!min_time || sensor->get_datetime() < min_time) {
+                    min_time = sensor->get_datetime();
+                }
 
-				if (sensor->get_datetime() > max_time) {
-					max_time = sensor->get_datetime();
-				}
+                if (sensor->get_datetime() > max_time) {
+                    max_time = sensor->get_datetime();
+                }
 
-				data.push_back(sensor);
-			}
-		}
+                data.push_back(sensor);
+            }
+        }
 
-		return new Reading_data(min_time, max_time, data);
-	}
+        return new Reading_data(min_time, max_time, data);
+    }
 
-	void Client_controller::set_state(Client_controller_state state) {
-		this->current_state = state;
-	}
+    void Client_controller::set_state(Client_controller_state state) {
+        this->current_state = state;
+    }
 }

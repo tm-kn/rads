@@ -3,6 +3,6 @@
 using std::cout;
 
 int main() {
-	cout << "Server running";
-	while (true);
+    cout << "Server running";
+    while (true);
 }
