@@ -6,6 +6,7 @@
 
 #include "Client_controller.h"
 #include "Base_state.h";
+#include "Connecting_state.h"
 #include "Reading_state.h";
 #include "../RADS_common/Fuel_level_reader.h"
 #include "../RADS_common/GPS_position_reader.h"
@@ -34,12 +35,9 @@ namespace RADS_client {
 	Client_controller::Client_controller()
 	{
 		// Multiple readers of the same type allowed
-		this->sensor_readers.push_back(new Speed_reader());
 		this->sensor_readers.push_back(new GPS_position_reader());
 		this->sensor_readers.push_back(new Temperature_sensor_reader());
 		this->sensor_readers.push_back(new Fuel_level_reader());
-		this->sensor_readers.push_back(new GPS_position_reader());
-		this->sensor_readers.push_back(new Temperature_sensor_reader());
 		this->sensor_readers.push_back(new Speed_reader());
 	}
 
@@ -54,6 +52,9 @@ namespace RADS_client {
 		case STATE_READING:
 			state = new State::Reading();
 			break;
+		case STATE_CONNECTING:
+			state = new State::Connecting();
+			break;
 		default:
 			throw logic_error("Client controller is in not-existent state");
 		}
@@ -65,10 +66,7 @@ namespace RADS_client {
 	void Client_controller::start_communicating()
 	{
 		this->set_state(STATE_CONNECTING);
-	}
-
-	void Client_controller::stop_communicating()
-	{
+		this->perform();
 	}
 
 	void Client_controller::start_reading()
@@ -79,11 +77,6 @@ namespace RADS_client {
 
 	vector<Sensor_reader*> Client_controller::get_sensor_readers() {
 		return this->sensor_readers;
-	}
-
-	void Client_controller::stop_reading()
-	{
-		
 	}
 
 	Reading_data* Client_controller::get_reading_data() {

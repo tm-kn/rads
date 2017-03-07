@@ -205,12 +205,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client_controller.cpp" />
+    <ClCompile Include="Connecting_state.cpp" />
     <ClCompile Include="RADS_client.cpp" />
     <ClCompile Include="Reading_state.cpp" />
     <ClCompile Include="Base_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client_controller.h" />
+    <ClInclude Include="Connecting_state.h" />
     <ClInclude Include="Reading_state.h" />
     <ClInclude Include="Base_state.h" />
   </ItemGroup>
