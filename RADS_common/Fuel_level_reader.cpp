@@ -1,9 +1,13 @@
+#include <chrono>
 #include <string>
+#include <thread>
 
 #include "Fuel_level.h"
 #include "Fuel_level_reader.h"
 
+using std::chrono::seconds;
 using std::string;
+using std::this_thread::sleep_for;
 
 using Readings::Fuel_level::Fuel_level;
 
@@ -19,8 +23,9 @@ namespace Readings {
 		}
 		
 		void Fuel_level_reader::read() {
-			for (int i = 100; i >= 50; i--) {
+			for (int i = 100; i >= 75; i--) {
 				this->readings.push_back(new Fuel_level(i));
+				sleep_for(seconds(1));
 			}
 		}
 

@@ -22,6 +22,10 @@ namespace Readings {
 	{
 	}
 
+	vector<Sensor*> Reading_data::get_data() {
+		return this->sensor_data;
+	}
+
 	time_t Reading_data::get_reading_start_datetime() {
 		return this->reading_start_datetime;
 	}
