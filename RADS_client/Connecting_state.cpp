@@ -47,7 +47,7 @@ namespace RADS_client {
             }
 
             cout << "Client Controller: Established connection to the server" << endl;
-                           
+
             delete client;
         }
     }

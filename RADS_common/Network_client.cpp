@@ -45,11 +45,12 @@ int Network_client::create_client_socket() {
     // Create a SOCKET for connecting to server
     this->ConnectSocket = socket(this->ptr->ai_family, this->ptr->ai_socktype,
         this->ptr->ai_protocol);
+
     return 0;
 }
 
 int Network_client::establish_client_connection() {
-    if (!this->create_client_socket()) {
+    if (this->create_client_socket() != 0) {
         return 1;
     }
 

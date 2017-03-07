@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../RADS_common/Network_client.h"
+#include "../RADS_common/Network_server.h"
 
 namespace RADS_server {
     class Server_controller
@@ -10,6 +10,8 @@ namespace RADS_server {
         ~Server_controller();
         void start_communication();
     private:
-        Network_client network_client;
+        unsigned int client_id;
+        Network_server network_server;
+        void update();
     };
 }
