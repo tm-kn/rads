@@ -56,6 +56,8 @@ namespace RADS_client {
 
         state->set_client_controller(this);
         state->perform();
+
+        delete state;
     }
 
     void Client_controller::start_communicating()
