@@ -197,6 +197,7 @@
     <ClInclude Include="Fuel_level_reader.h" />
     <ClInclude Include="GPS_position.h" />
     <ClInclude Include="GPS_position_reader.h" />
+    <ClInclude Include="Network_client.h" />
     <ClInclude Include="Reading_data.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Sensor_reader.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Fuel_level_reader.cpp" />
     <ClCompile Include="GPS_position.cpp" />
     <ClCompile Include="GPS_position_reader.cpp" />
+    <ClCompile Include="Network_client.cpp" />
     <ClCompile Include="Reading_data.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="Sensor_reader.cpp" />

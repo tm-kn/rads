@@ -29,7 +29,6 @@ using Readings::Temperature::Temperature_sensor_reader;
 namespace RADS_client {
     Client_controller::Client_controller()
     {
-        // Multiple readers of the same type allowed
         this->sensor_readers.push_back(new GPS_position_reader());
         this->sensor_readers.push_back(new Temperature_sensor_reader());
         this->sensor_readers.push_back(new Fuel_level_reader());

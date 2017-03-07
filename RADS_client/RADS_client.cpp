@@ -8,7 +8,7 @@ using std::endl;
 using RADS_client::Client_controller;
 
 int main() {
-    cout << "Remote Aeroplane Data System" << endl;
+    cout << "Remote Aeroplane Diagnostic System - Client" << endl;
 
     Client_controller* client_controller = new Client_controller();
 

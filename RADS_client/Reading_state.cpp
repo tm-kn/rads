@@ -29,6 +29,7 @@ namespace RADS_client {
             unordered_map<Sensor_reader*, thread*> threads;
 
             cout << "Client controller: Started reading" << endl;
+
             for (Sensor_reader *sensor_reader : this->get_client_controller()->get_sensor_readers()) {
                 threads.insert(pair<Sensor_reader*, thread*>(sensor_reader, new thread(&Sensor_reader::read, sensor_reader)));
                 cout << "Client controller: Thread for " << sensor_reader->get_sensor_reader_name() << " has started" << endl;
