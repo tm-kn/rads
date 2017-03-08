@@ -38,13 +38,7 @@ namespace RADS_client {
                 cout << "Client controller: Trying to establish connection to the server" << endl;
                 result = client->establish_client_connection();
                 tries++;
-            } while (result != 0 && tries < 5);
-
-            if (result != 0) {
-                cout << "Client controller: Could not connect to the server... Programme will terminate." << endl;
-                sleep_for(seconds(10));
-                exit(1);
-            }
+            } while (result != 0);
 
             cout << "Client Controller: Established connection to the server" << endl;
         }

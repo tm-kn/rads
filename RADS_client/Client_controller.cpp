@@ -1,7 +1,9 @@
+#include <chrono>
 #include <ctime>
 #include <exception>
 #include <iostream>
 #include <sstream>
+#include <thread>
 
 #include "Client_controller.h"
 #include "Base_state.h"
@@ -16,10 +18,13 @@
 #include "../RADS_common/Speed_reader.h"
 #include "../RADS_common/Temperature_sensor_reader.h"
 
+using std::chrono::seconds;
 using std::cout;
 using std::endl;
 using std::logic_error;
 using std::ostringstream;
+using std::this_thread::sleep_for;
+using std::time;
 
 using Readings::Fuel_level::Fuel_level_reader;
 using Readings::GPS_position::GPS_position_reader;
@@ -37,6 +42,9 @@ namespace RADS_client {
         this->sensor_readers.push_back(new Temperature_sensor_reader());
         this->sensor_readers.push_back(new Fuel_level_reader());
         this->sensor_readers.push_back(new Speed_reader());
+        
+        // Set transmission frequency to 1 minute
+        this->transmission_frequency = 60;
 
         // Generate random ID
         const void * address = static_cast<const void*>(this);
@@ -80,11 +88,25 @@ namespace RADS_client {
         delete this->network_client;
         this->network_client = new Network_client();
 
+        // Wait for transmission
+        long int next_transmission = this->transmission_frequency + this->last_transmission;
+
+        if (next_transmission > time(NULL)) {
+            long int waiting_time = next_transmission - time(NULL);
+
+            cout << "Client controller: Waiting " << waiting_time << " seconds for next transmission" << endl;
+            sleep_for(seconds(waiting_time));
+        }
+
+        // Set state to connecting and then sending
         this->set_state(CONNECTING);
         this->perform();
-   
+
         this->set_state(SENDING);
         this->perform();
+
+        // Set last transmission date
+        this->last_transmission = time(NULL);
     }
 
     void Client_controller::clean_sensor_readers() {
