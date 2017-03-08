@@ -25,4 +25,8 @@ namespace Readings {
     time_t Sensor::get_datetime() {
         return this->datetime;
     }
+
+    void Sensor::set_datetime(time_t datetime) {
+        this->datetime = datetime;
+    }
 }

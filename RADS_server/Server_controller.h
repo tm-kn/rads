@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include <vector>
 
 #include "../RADS_common/Network_server.h"
@@ -8,6 +9,7 @@
 #include "Observer.h"
 
 using std::map;
+using std::string;
 using std::vector;
 using Readings::Reading_data;
 
@@ -20,10 +22,11 @@ namespace RADS_server {
         void start_communication();
         void process_received_data(vector<Packet> packets);
     private:
-        map<unsigned int, vector<Reading_data>> reading_data;
+        map<string, vector<Reading_data>> reading_data;
         vector<Observer*> observers;
         Network_server * network_server;
         void notify_observers();
+        void add_to_reading_data(string, Reading_data reading_data);
         void update();
     };
 }

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Sensor.h"
+#include "Network_data.h"
 
 using std::time_t;
 using std::vector;
@@ -19,6 +20,7 @@ namespace Readings {
         vector<Sensor*> get_data();
         time_t get_reading_start_datetime();
         time_t get_reading_end_datetime();
+        static Sensor * convert_packet_to_sensor(Packet packet);
     private:
         time_t reading_start_datetime;
         time_t reading_end_datetime;

@@ -1,13 +1,18 @@
 #include <chrono>
 #include <iostream>
+#include <map>
 #include <thread>
+#include <vector>
 
 #include "Server_controller.h"
 
 using std::chrono::seconds;
 using std::cout;
 using std::endl;
+using std::make_pair;
+using std::pair;
 using std::this_thread::sleep_for;
+using std::vector;
 
 namespace RADS_server {
     Server_controller::Server_controller()
@@ -52,12 +57,39 @@ namespace RADS_server {
         }
     }
 
+    /**
+        Create Reading_data object for the packets and add it to the Server controler
+    */
     void Server_controller::process_received_data(vector<Packet> packets) {
         cout << "Server controller: Processing received data" << endl;
         
+        vector<Sensor*> sensor_data;
+
+        time_t min_time = 0;
+        time_t max_time = 0;
+
+        string sender_id;
+
         for (Packet packet : packets) {
-            cout << packet.data << endl;
+            if (min_time == 0 || packet.datetime < min_time) {
+                min_time = packet.datetime;
+            }
+
+            if (max_time == 0 || packet.datetime > max_time) {
+                max_time = packet.datetime;
+            }
+            
+            sender_id = packet.sender_id;
+            Sensor * sensor = Reading_data::convert_packet_to_sensor(packet);
+
+            if (sensor != NULL) {
+                sensor_data.push_back(sensor);
+            }
         }
+
+        Reading_data reading_data(min_time, max_time, sensor_data);
+
+        this->add_to_reading_data(sender_id, reading_data);
 
         cout << "Server controller: Processed received data" << endl;
     }
@@ -67,6 +99,20 @@ namespace RADS_server {
 
         for (Observer * observer : this->observers) {
             observer->update();
+        }
+    }
+
+    void Server_controller::add_to_reading_data(string sender_id, Reading_data reading_data) {
+        map<string, vector<Reading_data>>::iterator it = this->reading_data.find(sender_id);
+
+        if (it != this->reading_data.end()) {
+
+            it->second.push_back(reading_data);
+        }
+        else {
+            vector <Reading_data> new_vector;
+            new_vector.push_back(reading_data);
+            this->reading_data.insert(make_pair(sender_id, new_vector));
         }
     }
 }
