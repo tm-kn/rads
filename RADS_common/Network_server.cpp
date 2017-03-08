@@ -1,12 +1,12 @@
 #include <iostream>
 #include <map>
-
+#include <vector>
 #include "Network_server.h"
 
 using std::pair;
 using std::cout;
 using std::endl;
-
+using std::vector;
 
 
 Network_server::Network_server()
@@ -138,55 +138,6 @@ int Network_server::accept_connection(unsigned int id) {
     sessions.insert(pair<unsigned int, SOCKET>(id, this->ClientSocket));
 
     return 0;
-}
-
-int Network_server::receive_data() {
-    bool new_data_received = false;
-
-    Packet packet;
-
-    // go through all clients using an iterator
-    for (pair<unsigned int, SOCKET> session_pair : this->sessions) {
-        int data_length = this->receive_data_from_client(session_pair.first, this->network_data);
-
-        if (data_length <= 0)
-        {
-            //no data recieved
-            continue;
-        }
-
-        new_data_received = true;
-
-        int i = 0;
-        while (i < (unsigned int)data_length)
-        {
-            packet.deserialize(&(this->network_data[i]));
-            i += sizeof(Packet);
-
-            //switch based on packet type
-            switch (packet.packet_type) {
-
-            case INIT_CONNECTION:   
-                cout << "Network server: Received init packet from client " << session_pair.first << " of ID " << packet.sender_id << endl;
-                break;
-
-            case DATA_EVENT:
-                cout << "Network server: Received packet from client " << session_pair.first << endl;
-                cout << "Network server: [" << packet.sender_id << "][" << packet.datetime << "][" << packet.data_type << "]" << packet.data << endl << endl;
-                break;
-
-            default:
-                cout << "Network server: error in packet types" << endl;
-                break;
-            }
-        }
-    }
-
-    if (new_data_received) {
-        return 0;
-    }
-
-    return 1;
 }
 
 int Network_server::receive_data_from_client(unsigned int id, char * recvbuf) {

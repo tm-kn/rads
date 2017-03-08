@@ -47,9 +47,19 @@ namespace RADS_server {
     void Server_controller::update() {
         this->network_server->accept_connections();
 
-        if (this->network_server->receive_data() == 0) {
+        if (this->network_server->receive_data(*this, &Server_controller::process_received_data) == 0) {
             this->notify_observers();
         }
+    }
+
+    void Server_controller::process_received_data(vector<Packet> packets) {
+        cout << "Server controller: Processing received data" << endl;
+        
+        for (Packet packet : packets) {
+            cout << packet.data << endl;
+        }
+
+        cout << "Server controller: Processed received data" << endl;
     }
 
     void Server_controller::notify_observers() {
