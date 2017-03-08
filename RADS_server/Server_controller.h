@@ -10,7 +10,6 @@ namespace RADS_server {
         ~Server_controller();
         void start_communication();
     private:
-        unsigned int client_id;
         Network_server network_server;
         void update();
     };

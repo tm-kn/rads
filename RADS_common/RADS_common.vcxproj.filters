@@ -54,6 +54,9 @@
     <ClInclude Include="Network_server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Network_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sensor.cpp">

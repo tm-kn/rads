@@ -24,7 +24,7 @@ namespace RADS_client {
         void Connecting::perform() {
             cout << "Client controller: Start connecting" << endl;
                
-            Network_client *client = new Network_client();
+            Network_client *client = this->get_client_controller()->get_network_client();
 
             int result = 0;
             int tries = 0;
@@ -47,8 +47,6 @@ namespace RADS_client {
             }
 
             cout << "Client Controller: Established connection to the server" << endl;
-
-            delete client;
         }
     }
 }

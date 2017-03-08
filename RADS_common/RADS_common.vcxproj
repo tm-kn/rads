@@ -197,6 +197,7 @@
     <ClInclude Include="Fuel_level_reader.h" />
     <ClInclude Include="GPS_position.h" />
     <ClInclude Include="GPS_position_reader.h" />
+    <ClInclude Include="Network_data.h" />
     <ClInclude Include="Network_client.h" />
     <ClInclude Include="Network_server.h" />
     <ClInclude Include="Reading_data.h" />

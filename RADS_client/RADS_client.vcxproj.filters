@@ -30,6 +30,9 @@
     <ClCompile Include="Connecting_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sending_state.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client_controller.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Connecting_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sending_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,8 @@
 #include "Network_server.h"
 
 using std::pair;
+using std::cout;
+using std::endl;
 
 
 
@@ -43,7 +45,7 @@ int Network_server::etablish_server_communication() {
 
 int Network_server::create_socket() {
     struct addrinfo *result = NULL, *ptr = NULL, hints;
-       
+
     this->result = result;
 
     ZeroMemory(&hints, sizeof(hints));
@@ -59,7 +61,7 @@ int Network_server::create_socket() {
         WSACleanup();
         return 1;
     }
-      
+
     this->ListenSocket = INVALID_SOCKET;
 
     this->ListenSocket = socket(this->result->ai_family, this->result->ai_socktype, this->result->ai_protocol);
@@ -111,6 +113,13 @@ int Network_server::listen_on_socket() {
     return 0;
 }
 
+void Network_server::accept_connections() {
+    if (this->accept_connection(this->client_id) == 0) {
+        printf("Server Controller: Accepted connection to the server (client %d)\n", this->client_id);
+        this->client_id++;
+    }
+}
+
 int Network_server::accept_connection(unsigned int & id) {
     this->ClientSocket = INVALID_SOCKET;
 
@@ -127,6 +136,70 @@ int Network_server::accept_connection(unsigned int & id) {
 
     // insert new client into session id table
     sessions.insert(pair<unsigned int, SOCKET>(id, this->ClientSocket));
+
+    return 0;
+}
+
+void Network_server::receive_data() {
+    Packet packet;
+
+    // go through all clients using an iterator
+    map<unsigned int, SOCKET>::iterator iter;
+
+    for (pair<unsigned int, SOCKET> pair : this->sessions) {
+        int data_length = this->receive_data_from_client(pair.first, network_data);
+
+        if (data_length <= 0)
+        {
+            //no data recieved
+            continue;
+        }
+
+        int i = 0;
+        while (i < (unsigned int)data_length)
+        {
+            packet.deserialize(&(network_data[i]));
+            i += sizeof(Packet);
+
+            //switch based on packet type
+            switch (packet.packet_type) {
+
+            case INIT_CONNECTION:   
+
+                printf("server received init packet from client\n");
+                break;
+
+            case DATA_EVENT:
+
+                printf("server received action event packet from client\n");
+                cout << "Packet: [" << packet.datetime << "] " << packet.data_type << "; " << packet.data << endl;
+
+                break;
+
+            default:
+
+                printf("error in packet types\n");
+
+                break;
+            }
+        }
+    }
+}
+
+int Network_server::receive_data_from_client(unsigned int client_id, char * recvbuf) {
+    if (sessions.find(client_id) != sessions.end())
+    {
+        SOCKET currentSocket = sessions[client_id];
+        this->iResult = recv(currentSocket, recvbuf, MAX_PACKET_SIZE, 0);
+
+        if (this->iResult == 0)
+        {
+            printf("Connection closed\n");
+            closesocket(currentSocket);
+        }
+
+        return this->iResult;
+    }
 
     return 0;
 }

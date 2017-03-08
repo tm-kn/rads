@@ -3,9 +3,10 @@
 #include <iostream>
 
 #include "Client_controller.h"
-#include "Base_state.h";
+#include "Base_state.h"
 #include "Connecting_state.h"
-#include "Reading_state.h";
+#include "Reading_state.h"
+#include "Sending_state.h"
 #include "../RADS_common/Fuel_level_reader.h"
 #include "../RADS_common/GPS_position_reader.h"
 #include "../RADS_common/Reading_data.h"
@@ -49,6 +50,9 @@ namespace RADS_client {
         case CONNECTING:
             state = new State::Connecting();
             break;
+        case SENDING:
+            state = new State::Sending();
+            break;
         default:
             throw logic_error("Client controller is in not-existent state");
         }
@@ -61,7 +65,14 @@ namespace RADS_client {
 
     void Client_controller::start_communicating()
     {
+        // Create new network client
+        delete this->network_client;
+        this->network_client = new Network_client();
+
         this->set_state(CONNECTING);
+        this->perform();
+   
+        this->set_state(SENDING);
         this->perform();
     }
 
@@ -69,6 +80,10 @@ namespace RADS_client {
     {
         this->set_state(READING);
         this->perform();
+    }
+
+    Network_client* Client_controller::get_network_client() {
+        return this->network_client;
     }
 
     vector<Sensor_reader*> Client_controller::get_sensor_readers() {

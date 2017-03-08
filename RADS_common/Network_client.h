@@ -4,6 +4,8 @@
 #include <Windows.h>
 #include <ws2tcpip.h>
 
+#include "Network_data.h"
+
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_IP "127.0.0.1"
 #define DEFAULT_PORT "6881"
@@ -16,11 +18,12 @@ class Network_client
 public:
     int disconnect_client();
     int establish_client_connection();
-    int send_data();
+    int send_data(char * message, int message_size);
     Network_client();
     ~Network_client();
 private:
     addrinfo *ptr;
+    addrinfo *result;
     int iResult;
     SOCKET ConnectSocket;
     int create_client_socket();

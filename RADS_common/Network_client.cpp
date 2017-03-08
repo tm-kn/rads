@@ -23,6 +23,9 @@ int Network_client::create_client_socket() {
         *ptr = NULL,
         hints;
 
+    this->ptr = ptr;
+    this->result = result;
+
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -54,61 +57,41 @@ int Network_client::establish_client_connection() {
         return 1;
     }
 
-    this->iResult = connect(ConnectSocket, this->ptr->ai_addr, (int)this->ptr->ai_addrlen);
+    this->iResult = connect(this->ConnectSocket, this->ptr->ai_addr, (int)this->ptr->ai_addrlen);
     
     if (this->iResult == SOCKET_ERROR) {
-        closesocket(ConnectSocket);
-        ConnectSocket = INVALID_SOCKET;
+        closesocket(this->ConnectSocket);
+        this->ConnectSocket = INVALID_SOCKET;
+        return 1;
+    }
+
+    freeaddrinfo(this->result);
+
+    if (this->ConnectSocket == INVALID_SOCKET) {
+        printf("Network Client: Unable to connect to server!\n");
+        WSACleanup();
         return 1;
     }
 
     return 0;
 }
 
-int Network_client::send_data() {
-    int recvbuflen = DEFAULT_BUFLEN;
-
-    char *sendbuf = "this is a test";
-    char recvbuf[DEFAULT_BUFLEN];
-
+int Network_client::send_data(char * message, int message_size) {
     // Send an initial buffer
-    this->iResult = send(this->ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
+    this->iResult = send(this->ConnectSocket, message, message_size, 0);
     if (this->iResult == SOCKET_ERROR) {
         printf("Network Client: Send failed: %d\n", WSAGetLastError());
-        closesocket(this->ConnectSocket);
-        WSACleanup();
+        //closesocket(this->ConnectSocket);
+        //WSACleanup();
         return 1;
     }
 
     printf("Network Client: Bytes Sent: %ld\n", this->iResult);
-
-    // shutdown the connection for sending since no more data will be sent
-    // the client can still use the ConnectSocket for receiving data
-    this->iResult = shutdown(ConnectSocket, SD_SEND);
-    if (this->iResult == SOCKET_ERROR) {
-        printf("Network Client: shutdown failed: %d\n", WSAGetLastError());
-        closesocket(this->ConnectSocket);
-        WSACleanup();
-        return 1;
-    }
-
-    // Receive data until the server closes the connection
-    do {
-        this->iResult = recv(this->ConnectSocket, recvbuf, recvbuflen, 0);
-        if (this->iResult > 0)
-            printf("Network Client: Bytes received: %d\n", iResult);
-        else if (this->iResult == 0)
-            printf("Network Client: Connection closed\n");
-        else
-            printf("Network Client: recv failed: %d\n", WSAGetLastError());
-    } while (this->iResult > 0);
-
     return 0;
 }
 
 int Network_client::disconnect_client() {
-    // shutdown the send half of the connection since no more data will be sent
-    this->iResult = shutdown(this->ConnectSocket, SD_SEND);
+    this->iResult = shutdown(this->ConnectSocket, SD_BOTH);
     if (this->iResult == SOCKET_ERROR) {
         printf("Network Client: Shutdown failed: %d\n", WSAGetLastError());
         closesocket(this->ConnectSocket);

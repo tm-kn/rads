@@ -12,7 +12,6 @@ using std::this_thread::sleep_for;
 namespace RADS_server {
     Server_controller::Server_controller()
     {
-        this->client_id = 0;
     }
 
 
@@ -45,9 +44,7 @@ namespace RADS_server {
     }
 
     void Server_controller::update() {
-        if (this->network_server.accept_connection(this->client_id) == 0) {
-            printf("Server Controller: Accepted connection to the server (client %d)\n", this->client_id);
-            this->client_id++;
-       }
+        this->network_server.accept_connections();
+        this->network_server.receive_data();
     }
 }
