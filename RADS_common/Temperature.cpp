@@ -28,5 +28,9 @@ namespace Readings {
         string Temperature::get_sensor_type() {
             return "TMP";
         }
+        int Temperature::get_sensor_type_int()
+        {
+            return TEMPERATURE_SENSOR;
+        }
     }
 }

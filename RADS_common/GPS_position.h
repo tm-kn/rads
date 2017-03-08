@@ -17,6 +17,7 @@ namespace Readings {
             ~GPS_position();
             string get_sensor_data();
             string get_sensor_type();
+            int get_sensor_type_int();
         private:
             float latitude;
             float longitude;

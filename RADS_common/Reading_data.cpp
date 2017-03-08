@@ -55,7 +55,7 @@ namespace Readings {
     Sensor * Reading_data::convert_packet_to_sensor(Packet packet) {
         string data_string(packet.data);
 
-        if (string(packet.data_type) == "GPS") {
+        if (packet.data_type == GPS_POSITION_SENSOR) {
             vector<string> tokens;
 
             size_t pos = 0;
@@ -71,12 +71,12 @@ namespace Readings {
             gps_pos->set_datetime(packet.datetime);
             return gps_pos;
         }
-        else if (string(packet.data_type) == "FUEL") {
+        else if (packet.data_type == FUEL_LEVEL_SENSOR) {
             Fuel_level::Fuel_level * fuel = new Fuel_level::Fuel_level(stof(data_string));
             fuel->set_datetime(packet.datetime);
             return fuel;
 ;        }
-        else if (string(packet.data_type) == "TMP") {
+        else if (packet.data_type == TEMPERATURE_SENSOR) {
             vector<string> tokens;
 
             size_t pos = 0;
@@ -92,7 +92,7 @@ namespace Readings {
             temperature->set_datetime(packet.datetime);
             return temperature;
         }
-        else if (string(packet.data_type) == "SPEED") {
+        else if (packet.data_type == SPEED_SENSOR) {
             Speed::Speed * speed = new Speed::Speed(stof(data_string));
             speed->set_datetime(packet.datetime);
             return speed;

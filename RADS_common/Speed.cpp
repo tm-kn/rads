@@ -27,5 +27,9 @@ namespace Readings {
         string Speed::get_sensor_type() {
             return "SPEED";
         }
+        int Speed::get_sensor_type_int()
+        {
+            return SPEED_SENSOR;
+        }
     }
 }

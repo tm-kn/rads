@@ -62,7 +62,7 @@ namespace RADS_client {
                 Packet packet;
                 packet.packet_type = DATA_EVENT;
                 strcpy_s(packet.sender_id, sizeof packet.sender_id, this->get_client_controller()->get_id().c_str());
-                strcpy_s(packet.data_type, sizeof packet.data_type, sensor->get_sensor_type().c_str());
+                packet.data_type = sensor->get_sensor_type_int();
                 strcpy_s(packet.data, sizeof packet.data, sensor->get_sensor_data().c_str());
                 packet.datetime = sensor->get_datetime();
 

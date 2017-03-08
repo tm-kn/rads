@@ -18,6 +18,7 @@ namespace Readings {
             ~Fuel_level();
             string get_sensor_type();
             string get_sensor_data();
+            int get_sensor_type_int();
         private:
             float fuel_level;
         };

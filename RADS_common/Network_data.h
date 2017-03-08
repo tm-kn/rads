@@ -16,7 +16,7 @@ struct Packet {
 
     unsigned int packet_type;
     char sender_id[50];
-    char data_type[100];
+    unsigned int data_type;
     char data[100];
     time_t datetime;
    

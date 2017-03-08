@@ -24,6 +24,11 @@ namespace Readings {
             return stringStream.str();
         }
 
+        int Fuel_level::get_sensor_type_int()
+        {
+            return FUEL_LEVEL_SENSOR;
+        }
+
         string Fuel_level::get_sensor_type() {
             return "FUEL";
         }
