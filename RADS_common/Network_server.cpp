@@ -58,7 +58,7 @@ int Network_server::create_socket() {
     this->iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &this->result);
     if (this->iResult != 0) {
         printf("Network Server: getaddrinfo failed: %d\n", this->iResult);
-        WSACleanup();
+        //WSACleanup();
         return 1;
     }
 
@@ -68,8 +68,8 @@ int Network_server::create_socket() {
 
     if (this->ListenSocket == INVALID_SOCKET) {
         printf("Network Server: Error at socket(): %ld\n", WSAGetLastError());
-        freeaddrinfo(this->result);
-        WSACleanup();
+        //freeaddrinfo(this->result);
+        //WSACleanup();
         return 1;
     }
 
@@ -78,9 +78,9 @@ int Network_server::create_socket() {
 
     if (this->iResult == SOCKET_ERROR) {
         printf("Network server: ioctlsocket failed with error: %d\n", WSAGetLastError());
-        closesocket(this->ListenSocket);
-        WSACleanup();
-        exit(1);
+        //closesocket(this->ListenSocket);
+        //WSACleanup();
+        return 1;
     }
 
     return 0;
@@ -91,9 +91,9 @@ int Network_server::bind_socket() {
     this->iResult = bind(this->ListenSocket, this->result->ai_addr, (int)this->result->ai_addrlen);
     if (this->iResult == SOCKET_ERROR) {
         printf("Network Server: bind failed with error: %d\n", WSAGetLastError());
-        freeaddrinfo(this->result);
-        closesocket(this->ListenSocket);
-        WSACleanup();
+        //freeaddrinfo(this->result);
+        //closesocket(this->ListenSocket);
+        //WSACleanup();
         return 1;
     }
 
@@ -105,8 +105,8 @@ int Network_server::bind_socket() {
 int Network_server::listen_on_socket() {
     if (listen(this->ListenSocket, SOMAXCONN) == SOCKET_ERROR) {
         printf("Network Server: Listen failed with error: %ld\n", WSAGetLastError());
-        closesocket(this->ListenSocket);
-        WSACleanup();
+        //closesocket(this->ListenSocket);
+        //WSACleanup();
         return 1;
     }
 

@@ -83,10 +83,10 @@ int Network_client::send_data(char * message, int message_size) {
         printf("Network Client: Send failed: %d\n", WSAGetLastError());
         closesocket(this->ConnectSocket);
         WSACleanup();
-        return 1;
+        return this->iResult;
     }
 
-    return 0;
+    return this->iResult;
 }
 
 int Network_client::disconnect_client() {

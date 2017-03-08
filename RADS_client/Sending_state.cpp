@@ -22,7 +22,7 @@ namespace RADS_client {
 
             this->client = this->get_client_controller()->get_network_client();
             
-            if (this->send_init_connection_packet() != 0) {
+            if (this->send_init_connection_packet() <= 0) {
                 cout << "Client Controller: Failed to send INIT_CONNETION packet" << endl;
             }
             else {
@@ -68,9 +68,9 @@ namespace RADS_client {
 
                 packet.serialize(packet_data);
 
-                if (this->client->send_data(packet_data, packet_size) != 0) {
-                    return 1;
-                }
+                int bytes_sent = this->client->send_data(packet_data, packet_size);
+
+                this->get_client_controller()->add_bytes_sent(bytes_sent);
             }
 
             return 0;

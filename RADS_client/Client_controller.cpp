@@ -43,7 +43,7 @@ namespace RADS_client {
         this->sensor_readers.push_back(new Fuel_level_reader());
         this->sensor_readers.push_back(new Speed_reader());
         
-        // Set transmission frequency to 1 minute
+        // Set transmission frequency to 60 seconds
         this->transmission_frequency = 60;
 
         // Generate random ID
@@ -52,7 +52,13 @@ namespace RADS_client {
         string_stream << address;
         this->id = string_stream.str();
 
+        // Set limitations 5MB per hour
+        this->data_hourly_limit = 5 * 1024 * 1024;
+        this->data_period_start_datetime = time(NULL);
+        this->data_sent_bytes = 0;
+          
         cout << "Client Controller: Sender ID set to " << this->id << endl;
+        cout << "Client Controller: Hourly data limitation set to " << this->data_hourly_limit << " bytes" << endl;
     }
 
     Client_controller::~Client_controller()
@@ -98,6 +104,22 @@ namespace RADS_client {
             sleep_for(seconds(waiting_time));
         }
 
+        // Check data limits
+        int result = 0;
+        int tries = 0;
+        cout << "Client controller: So far sent " << this->data_sent_bytes << " bytes in the current period." << endl;
+
+        do {
+            result = this->check_data_limitation();
+
+            if (tries > 0 && result != 0) {
+                cout << "Client controller: Waiting until can send more data due to the hourly limitation (" << tries << " tries)." << endl;
+                sleep_for(seconds(30));
+            }
+
+            tries++;
+        } while (result != 0);
+
         // Set state to connecting and then sending
         this->set_state(CONNECTING);
         this->perform();
@@ -131,6 +153,11 @@ namespace RADS_client {
         return this->sensor_readers;
     }
 
+    void Client_controller::add_bytes_sent(int bytes)
+    {
+        this->data_sent_bytes += bytes;
+    }
+
     Reading_data* Client_controller::get_reading_data() {
         vector<Sensor*> data;
         time_t min_time = 0;
@@ -155,6 +182,24 @@ namespace RADS_client {
 
     void Client_controller::set_state(Client_controller_state state) {
         this->current_state = state;
+    }
+
+    int Client_controller::check_data_limitation()
+    {
+        time_t reset_time = this->data_period_start_datetime + 60 * 60;
+
+        if (time(NULL) >= reset_time) {
+            cout << "Client controller: Reset data throotling" << endl;
+            this->data_period_start_datetime = time(NULL);
+            this->data_sent_bytes = 0;
+            return 0;
+        }
+
+        if (this->data_sent_bytes >= this->data_hourly_limit) {
+            return 1;
+        }
+
+        return 0;
     }
 
     string Client_controller::get_id() {

@@ -26,11 +26,15 @@ namespace RADS_client {
         Network_client* get_network_client();
         Reading_data* get_reading_data();
         vector<Sensor_reader*> get_sensor_readers();
+        void add_bytes_sent(int bytes);
         void start_communicating();
         void clean_sensor_readers();
         void start_reading();
         void perform();
     private:
+        int data_sent_bytes;
+        int data_hourly_limit;
+        time_t data_period_start_datetime;
         string id;
         long int transmission_frequency;
         time_t last_transmission;
@@ -38,5 +42,6 @@ namespace RADS_client {
         vector<Sensor_reader*> sensor_readers;
         Client_controller_state current_state;
         Network_client* network_client;
+        int check_data_limitation();
     };
 }
