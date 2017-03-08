@@ -46,6 +46,17 @@ namespace RADS_server {
 
     void Server_controller::update() {
         this->network_server->accept_connections();
-        this->network_server->receive_data();
+
+        if (this->network_server->receive_data() == 0) {
+            this->notify_observers();
+        }
+    }
+
+    void Server_controller::notify_observers() {
+        cout << "Server controller: Notifying observers..." << endl;
+
+        for (Observer * observer : this->observers) {
+            observer->update();
+        }
     }
 }

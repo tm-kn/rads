@@ -23,7 +23,7 @@ public:
     ~Network_server();
     int etablish_server_communication();
     void accept_connections();
-    void receive_data();
+    int receive_data();
 private:
     SOCKET ClientSocket;
     SOCKET ListenSocket;

@@ -140,7 +140,9 @@ int Network_server::accept_connection(unsigned int id) {
     return 0;
 }
 
-void Network_server::receive_data() {
+int Network_server::receive_data() {
+    bool new_data_received = false;
+
     Packet packet;
 
     // go through all clients using an iterator
@@ -152,6 +154,8 @@ void Network_server::receive_data() {
             //no data recieved
             continue;
         }
+
+        new_data_received = true;
 
         int i = 0;
         while (i < (unsigned int)data_length)
@@ -177,6 +181,12 @@ void Network_server::receive_data() {
             }
         }
     }
+
+    if (new_data_received) {
+        return 0;
+    }
+
+    return 1;
 }
 
 int Network_server::receive_data_from_client(unsigned int id, char * recvbuf) {
