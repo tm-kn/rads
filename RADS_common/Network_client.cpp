@@ -81,24 +81,15 @@ int Network_client::send_data(char * message, int message_size) {
     this->iResult = send(this->ConnectSocket, message, message_size, 0);
     if (this->iResult == SOCKET_ERROR) {
         printf("Network Client: Send failed: %d\n", WSAGetLastError());
-        //closesocket(this->ConnectSocket);
-        //WSACleanup();
-        return 1;
-    }
-
-    printf("Network Client: Bytes Sent: %ld\n", this->iResult);
-    return 0;
-}
-
-int Network_client::disconnect_client() {
-    this->iResult = shutdown(this->ConnectSocket, SD_BOTH);
-    if (this->iResult == SOCKET_ERROR) {
-        printf("Network Client: Shutdown failed: %d\n", WSAGetLastError());
         closesocket(this->ConnectSocket);
         WSACleanup();
         return 1;
     }
 
+    return 0;
+}
+
+int Network_client::disconnect_client() {
     // cleanup
     closesocket(this->ConnectSocket);
     WSACleanup();

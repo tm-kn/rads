@@ -16,7 +16,8 @@ namespace Readings {
         public:
             Temperature(string sensor_name, double temperature);
             ~Temperature();
-            string to_string();
+            string get_sensor_data();
+            string get_sensor_type();
         private:
             double temperature;
             string sensor_name;

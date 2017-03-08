@@ -45,6 +45,7 @@ namespace RADS_client {
 
             Packet packet;
             packet.packet_type = INIT_CONNECTION;
+            strcpy_s(packet.sender_id, sizeof packet.sender_id, this->get_client_controller()->get_id().c_str());
             packet.serialize(packet_data);
 
             cout << "Client controller: Sending INIT_CONNETION" << endl;
@@ -60,8 +61,9 @@ namespace RADS_client {
             for (Sensor * sensor : reading_data->get_data()) {
                 Packet packet;
                 packet.packet_type = DATA_EVENT;
-                strcpy_s(packet.data_type, sizeof packet.data_type, "test");
-                strcpy_s(packet.data, sizeof packet.data, sensor->to_string().c_str());
+                strcpy_s(packet.sender_id, sizeof packet.sender_id, this->get_client_controller()->get_id().c_str());
+                strcpy_s(packet.data_type, sizeof packet.data_type, sensor->get_sensor_type().c_str());
+                strcpy_s(packet.data, sizeof packet.data, sensor->get_sensor_data().c_str());
                 packet.datetime = sensor->get_datetime();
 
                 packet.serialize(packet_data);

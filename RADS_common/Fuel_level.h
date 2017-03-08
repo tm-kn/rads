@@ -16,10 +16,10 @@ namespace Readings {
         public:
             Fuel_level(float fuel_level);
             ~Fuel_level();
+            string get_sensor_type();
+            string get_sensor_data();
         private:
             float fuel_level;
-        public:
-            string to_string();
         };
 
     }

@@ -16,7 +16,8 @@ namespace Readings {
         public:
             Speed(float speed);
             ~Speed();
-            string to_string();
+            string get_sensor_data();
+            string get_sensor_type();
         private:
             float speed;
         };

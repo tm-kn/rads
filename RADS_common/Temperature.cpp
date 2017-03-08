@@ -19,10 +19,14 @@ namespace Readings {
         {
         }
 
-        string Temperature::to_string() {
+        string Temperature::get_sensor_data() {
             ostringstream stringStream;
-            stringStream << "TMP " << this->sensor_name << "; " << this->temperature;
+            stringStream << this->sensor_name << ";" << this->temperature;
             return stringStream.str();
+        }
+
+        string Temperature::get_sensor_type() {
+            return "TMP";
         }
     }
 }

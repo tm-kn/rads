@@ -15,7 +15,8 @@ namespace Readings {
         public:
             GPS_position(float latitude, float longitude, float altitude);
             ~GPS_position();
-            string to_string();
+            string get_sensor_data();
+            string get_sensor_type();
         private:
             float latitude;
             float longitude;

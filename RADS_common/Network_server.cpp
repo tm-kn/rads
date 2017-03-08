@@ -115,12 +115,12 @@ int Network_server::listen_on_socket() {
 
 void Network_server::accept_connections() {
     if (this->accept_connection(this->client_id) == 0) {
-        printf("Server Controller: Accepted connection to the server (client %d)\n", this->client_id);
+        printf("Network server: Accepted connection to the server (client %d)\n", this->client_id);
         this->client_id++;
     }
 }
 
-int Network_server::accept_connection(unsigned int & id) {
+int Network_server::accept_connection(unsigned int id) {
     this->ClientSocket = INVALID_SOCKET;
 
     // Accept a client socket
@@ -144,10 +144,8 @@ void Network_server::receive_data() {
     Packet packet;
 
     // go through all clients using an iterator
-    map<unsigned int, SOCKET>::iterator iter;
-
-    for (pair<unsigned int, SOCKET> pair : this->sessions) {
-        int data_length = this->receive_data_from_client(pair.first, network_data);
+    for (pair<unsigned int, SOCKET> session_pair : this->sessions) {
+        int data_length = this->receive_data_from_client(session_pair.first, this->network_data);
 
         if (data_length <= 0)
         {
@@ -158,43 +156,38 @@ void Network_server::receive_data() {
         int i = 0;
         while (i < (unsigned int)data_length)
         {
-            packet.deserialize(&(network_data[i]));
+            packet.deserialize(&(this->network_data[i]));
             i += sizeof(Packet);
 
             //switch based on packet type
             switch (packet.packet_type) {
 
             case INIT_CONNECTION:   
-
-                printf("server received init packet from client\n");
+                cout << "Network server: Received init packet from client " << session_pair.first << " of ID " << packet.sender_id << endl;
                 break;
 
             case DATA_EVENT:
-
-                printf("server received action event packet from client\n");
-                cout << "Packet: [" << packet.datetime << "] " << packet.data_type << "; " << packet.data << endl;
-
+                cout << "Network server: Received packet from client " << session_pair.first << endl;
+                cout << "Network server: [" << packet.sender_id << "][" << packet.datetime << "][" << packet.data_type << "]" << packet.data << endl << endl;
                 break;
 
             default:
-
-                printf("error in packet types\n");
-
+                cout << "Network server: error in packet types" << endl;
                 break;
             }
         }
     }
 }
 
-int Network_server::receive_data_from_client(unsigned int client_id, char * recvbuf) {
-    if (sessions.find(client_id) != sessions.end())
+int Network_server::receive_data_from_client(unsigned int id, char * recvbuf) {
+    if (sessions.find(id) != sessions.end())
     {
-        SOCKET currentSocket = sessions[client_id];
+        SOCKET currentSocket = sessions[id];
         this->iResult = recv(currentSocket, recvbuf, MAX_PACKET_SIZE, 0);
 
         if (this->iResult == 0)
         {
-            printf("Connection closed\n");
+            cout << "Network server: Connection to client " << id << " closed" << endl;
             closesocket(currentSocket);
         }
 

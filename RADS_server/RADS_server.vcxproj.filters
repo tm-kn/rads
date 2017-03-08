@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RADS_server.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Server_controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RADS_server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

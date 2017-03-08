@@ -18,12 +18,14 @@ namespace Readings {
         {
         }
 
-
-        string Fuel_level::to_string()
-        {
+        string Fuel_level::get_sensor_data() {
             ostringstream stringStream;
-            stringStream << "FUEL " << this->fuel_level;
+            stringStream << this->fuel_level;
             return stringStream.str();
+        }
+
+        string Fuel_level::get_sensor_type() {
+            return "FUEL";
         }
     }
 }

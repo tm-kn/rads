@@ -19,12 +19,15 @@ namespace Readings {
         {
         }
 
-        string GPS_position::to_string()
-        {
+        string GPS_position::get_sensor_data() {
             ostringstream stringStream;
-            stringStream << "LAT" << this->latitude << "; LNG " << this->longitude << "; ALT " << this->altitude;
+            stringStream << this->latitude << ";" << this->longitude << ";" << this->altitude;
 
             return stringStream.str();
+        }
+
+        string GPS_position::get_sensor_type() {
+            return "GPS";
         }
     }
 }

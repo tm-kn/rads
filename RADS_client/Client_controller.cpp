@@ -1,6 +1,7 @@
 #include <ctime>
 #include <exception>
 #include <iostream>
+#include <sstream>
 
 #include "Client_controller.h"
 #include "Base_state.h"
@@ -18,6 +19,7 @@
 using std::cout;
 using std::endl;
 using std::logic_error;
+using std::ostringstream;
 
 using Readings::Fuel_level::Fuel_level_reader;
 using Readings::GPS_position::GPS_position_reader;
@@ -30,10 +32,19 @@ using Readings::Temperature::Temperature_sensor_reader;
 namespace RADS_client {
     Client_controller::Client_controller()
     {
+        // Add sensor readers
         this->sensor_readers.push_back(new GPS_position_reader());
         this->sensor_readers.push_back(new Temperature_sensor_reader());
         this->sensor_readers.push_back(new Fuel_level_reader());
         this->sensor_readers.push_back(new Speed_reader());
+
+        // Generate random ID
+        const void * address = static_cast<const void*>(this);
+        ostringstream string_stream;
+        string_stream << address;
+        this->id = string_stream.str();
+
+        cout << "Client Controller: Sender ID set to " << this->id << endl;
     }
 
     Client_controller::~Client_controller()
@@ -114,5 +125,9 @@ namespace RADS_client {
 
     void Client_controller::set_state(Client_controller_state state) {
         this->current_state = state;
+    }
+
+    string Client_controller::get_id() {
+        return this->id;
     }
 }

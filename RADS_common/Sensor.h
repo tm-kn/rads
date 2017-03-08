@@ -13,7 +13,9 @@ namespace Readings {
     public:
         Sensor();
         time_t get_datetime();
-        virtual string to_string() = 0;
+        virtual string to_string();
+        virtual string get_sensor_type() = 0;
+        virtual string get_sensor_data() = 0;
     private:
         time_t datetime;
     };

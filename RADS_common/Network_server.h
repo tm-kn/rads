@@ -21,7 +21,6 @@ class Network_server
 public:
     Network_server();
     ~Network_server();
-    int disconnect_server();
     int etablish_server_communication();
     void accept_connections();
     void receive_data();
@@ -32,7 +31,7 @@ private:
     int iResult;
     map<unsigned int, SOCKET> sessions;
     unsigned int client_id;
-    int accept_connection(unsigned int & id);
+    int accept_connection(unsigned int id);
     int create_socket();
     int bind_socket();
     int listen_on_socket();

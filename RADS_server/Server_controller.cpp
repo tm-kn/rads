@@ -12,6 +12,7 @@ using std::this_thread::sleep_for;
 namespace RADS_server {
     Server_controller::Server_controller()
     {
+        this->network_server = new Network_server();
     }
 
 
@@ -31,7 +32,7 @@ namespace RADS_server {
 
             sleep_for(seconds(5));
 
-            int result = this->network_server.etablish_server_communication();
+            int result = this->network_server->etablish_server_communication();
         } while (result != 0);
 
         cout << "Server controller: Established server communication - ready to accept clients" << endl;
@@ -44,7 +45,7 @@ namespace RADS_server {
     }
 
     void Server_controller::update() {
-        this->network_server.accept_connections();
-        this->network_server.receive_data();
+        this->network_server->accept_connections();
+        this->network_server->receive_data();
     }
 }

@@ -18,10 +18,14 @@ namespace Readings {
         {
         }
 
-        string Speed::to_string() {
+        string Speed::get_sensor_data() {
             ostringstream stringStream;
-            stringStream << "SPEED " << this->speed;
+            stringStream << this->speed;
             return stringStream.str();
+        }
+
+        string Speed::get_sensor_type() {
+            return "SPEED";
         }
     }
 }
