@@ -27,6 +27,9 @@
     <ClCompile Include="CLI_observer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="File_writer_observer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server_controller.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CLI_observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="File_writer_observer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -216,12 +216,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CLI_observer.cpp" />
+    <ClCompile Include="File_writer_observer.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="RADS_server.cpp" />
     <ClCompile Include="Server_controller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLI_observer.h" />
+    <ClInclude Include="File_writer_observer.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Server_controller.h" />
   </ItemGroup>

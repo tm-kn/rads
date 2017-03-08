@@ -7,6 +7,7 @@
 #include "Server_controller.h"
 #include "Observer.h"
 #include "CLI_observer.h"
+#include "File_writer_observer.h"
 
 using std::chrono::seconds;
 using std::cout;
@@ -22,6 +23,7 @@ namespace RADS_server {
         this->network_server = new Network_server();
 
         this->add_observer(new CLI_observer());
+        this->add_observer(new File_writer_observer());
     }
 
 
