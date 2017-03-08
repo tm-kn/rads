@@ -55,6 +55,7 @@ namespace RADS_server {
 
     void Server_controller::update() {
         this->network_server->accept_connections();
+        this->check_last_reading_datetimes();
 
         if (this->network_server->receive_data(*this, &Server_controller::process_received_data) == 0) {
             this->notify_observers();
@@ -95,7 +96,31 @@ namespace RADS_server {
 
         this->add_to_reading_data(sender_id, reading_data);
 
+        // Set last received date for this client
+        this->last_reading_datetimes[sender_id] = time(NULL);
+
         cout << "Server controller: Processed received data" << endl;
+    }
+
+    void Server_controller::check_last_reading_datetimes()
+    {
+        long int warning = 5 * 60;
+        long int severe = 15 * 60;
+        long int critical = 25 * 60;
+
+        for (pair<string, time_t> last_reading_pair : this->last_reading_datetimes) {
+            long int time_elapsed = time(NULL) - last_reading_pair.second;
+
+            if (time_elapsed >= warning && time_elapsed < severe) {
+                cout << "Server controller: Warning - no communication with " << last_reading_pair.first << " for 5 minutes" << endl;
+            }
+            else if (time_elapsed >= severe && time_elapsed < critical) {
+                cout << "Server controller: Severe - no communication with " << last_reading_pair.first << " for 15 minutes" << endl;
+            }
+            else if (time_elapsed >= critical) {
+                cout << "Server controller: Critical - no communication with " << last_reading_pair.first << " for 25 minutes" << endl;
+            }
+        }
     }
 
     void Server_controller::notify_observers() {
@@ -127,5 +152,9 @@ namespace RADS_server {
 
     map<string, vector<Reading_data>> Server_controller::get_reading_data() {
         return this->reading_data;
+    }
+    map<string, time_t> Server_controller::get_last_reading_datetimes()
+    {
+        return this->last_reading_datetimes;
     }
 }
