@@ -24,6 +24,7 @@ namespace RADS_client {
         Reading_data* get_reading_data();
         vector<Sensor_reader*> get_sensor_readers();
         void start_communicating();
+        void clean_sensor_readers();
         void start_reading();
         void perform();
     private:

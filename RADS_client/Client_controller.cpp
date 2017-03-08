@@ -87,6 +87,14 @@ namespace RADS_client {
         this->perform();
     }
 
+    void Client_controller::clean_sensor_readers() {
+        for (Sensor_reader *sensor_reader : this->sensor_readers) {
+            sensor_reader->clear_readings();
+        }
+
+        cout << "Client controller: Cleared readings from the memory" << endl;
+    }
+
     void Client_controller::start_reading()
     {
         this->set_state(READING);
@@ -107,7 +115,7 @@ namespace RADS_client {
         time_t max_time = 0;
 
         for (Sensor_reader *sensor_reader : this->sensor_readers) {
-            for (Sensor *sensor : sensor_reader->getReadings()) {
+            for (Sensor *sensor : sensor_reader->get_readings()) {
                 if (!min_time || sensor->get_datetime() < min_time) {
                     min_time = sensor->get_datetime();
                 }

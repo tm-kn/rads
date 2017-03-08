@@ -26,6 +26,8 @@ namespace RADS_client {
 
         void Reading::perform()
         {
+            this->get_client_controller()->clean_sensor_readers();
+
             unordered_map<Sensor_reader*, thread*> threads;
 
             cout << "Client controller: Started reading" << endl;

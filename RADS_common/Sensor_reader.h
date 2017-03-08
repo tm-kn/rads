@@ -16,7 +16,8 @@ namespace Readings {
     public:
         Sensor_reader();
         ~Sensor_reader();
-        vector<Sensor*> getReadings();
+        vector<Sensor*> get_readings();
+        void clear_readings();
         virtual void read() = 0;
         virtual void set_up() = 0;
         virtual string get_sensor_reader_name() = 0;

@@ -16,9 +16,13 @@ namespace Readings {
     {
     }
 
-    vector<Sensor*> Sensor_reader::getReadings()
+    vector<Sensor*> Sensor_reader::get_readings()
     {
         return this->readings;
+    }
+
+    void Sensor_reader::clear_readings() {
+        this->readings.clear();
     }
 
     void Sensor_reader::read()
