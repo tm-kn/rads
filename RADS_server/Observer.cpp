@@ -1,3 +1,4 @@
+#include "Server_controller.h"
 #include "Observer.h"
 
 namespace RADS_server {

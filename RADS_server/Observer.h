@@ -1,7 +1,6 @@
 #pragma once
 
 namespace RADS_server {
-    // Break circular import problem by declaring empty class
     class Server_controller;
 
     class Observer

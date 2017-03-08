@@ -5,6 +5,8 @@
 #include <vector>
 
 #include "Server_controller.h"
+#include "Observer.h"
+#include "CLI_observer.h"
 
 using std::chrono::seconds;
 using std::cout;
@@ -18,6 +20,8 @@ namespace RADS_server {
     Server_controller::Server_controller()
     {
         this->network_server = new Network_server();
+
+        this->add_observer(new CLI_observer());
     }
 
 
@@ -114,5 +118,14 @@ namespace RADS_server {
             new_vector.push_back(reading_data);
             this->reading_data.insert(make_pair(sender_id, new_vector));
         }
+    }
+
+    void Server_controller::add_observer(Observer * observer) {
+        observer->set_server_controller(this);
+        this->observers.push_back(observer);
+    }
+
+    map<string, vector<Reading_data>> Server_controller::get_reading_data() {
+        return this->reading_data;
     }
 }

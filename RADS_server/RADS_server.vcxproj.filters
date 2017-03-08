@@ -24,12 +24,18 @@
     <ClCompile Include="Observer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CLI_observer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server_controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CLI_observer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
