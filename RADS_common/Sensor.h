@@ -26,6 +26,8 @@ namespace Readings {
     public:
         Sensor();
 
+        ~Sensor();
+
         ///
         /// <summary>Get time of the reading.</summary>
         /// <returns><see cref="time_t" /> of the reading.</returns>

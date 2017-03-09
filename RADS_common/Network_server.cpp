@@ -12,14 +12,14 @@ using std::vector;
 // Please note that Network_server::receive_data is implemented in the header file
 // since it's a template and compiler will fail if it's in this cpp file.
 
-Network_server::Network_server(string ip, int port)
-{
+Network_server::Network_server(string ip, int port) {
+    // Set IP and port.
     this->ip = ip;
     this->port = port;
 
+    // Initialize Winsock
     WSADATA wsaData;
 
-    // Initialize Winsock
     this->iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (this->iResult != 0) {
         printf("Network Server: WSAStartup failed: %d\n", this->iResult);
@@ -28,10 +28,7 @@ Network_server::Network_server(string ip, int port)
 
 }
 
-
-Network_server::~Network_server()
-{
-}
+Network_server::~Network_server() {}
 
 int Network_server::establish_server_communication() {
     if (this->create_socket() != 0) {
@@ -153,13 +150,14 @@ int Network_server::accept_connection(unsigned int id) {
 }
 
 int Network_server::receive_data_from_client(unsigned int id, char * recvbuf) {
+    // Find session for particular client.
     if (this->sessions.find(id) != this->sessions.end())
     {
+        // Receive data on the particular client's socket.
         SOCKET currentSocket = this->sessions[id];
         this->iResult = recv(currentSocket, recvbuf, MAX_PACKET_SIZE, 0);
 
-        if (this->iResult == 0)
-        {
+        if (this->iResult == 0) {
             cout << "Network server: Connection to client " << id << " closed" << endl;
             closesocket(currentSocket);
         }

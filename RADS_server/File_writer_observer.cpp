@@ -16,14 +16,9 @@ using std::vector;
 using Readings::Reading_data;
 
 namespace RADS_server {
-    File_writer_observer::File_writer_observer()
-    {
-    }
+    File_writer_observer::File_writer_observer() {}
 
-
-    File_writer_observer::~File_writer_observer()
-    {
-    }
+    File_writer_observer::~File_writer_observer() {}
     
     void File_writer_observer::update() {
         cout << endl << endl << "File Writer Observer: Writing to a file..." << endl << endl;

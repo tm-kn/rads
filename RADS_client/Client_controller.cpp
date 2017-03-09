@@ -25,7 +25,8 @@ using Readings::Sensor;
 
 namespace RADS_client {
     Client_controller::Client_controller(string id, vector<Sensor_reader*> sensor_readers,
-        int transmission_frequency, int data_hourly_limit, string ip, int port) {
+            int transmission_frequency, int data_hourly_limit, string ip, int port
+    ) {
         // Add sensor readers
         for (Sensor_reader * reader : sensor_readers) {
             this->sensor_readers.push_back(reader);
@@ -53,9 +54,7 @@ namespace RADS_client {
         cout << "Client Controller: Hourly data limitation set to " << this->data_hourly_limit << " bytes" << endl << endl;
     }
 
-    Client_controller::~Client_controller()
-    {
-    }
+    Client_controller::~Client_controller() {}
 
     void Client_controller::perform() {
         State::Base* state = NULL;
@@ -77,16 +76,16 @@ namespace RADS_client {
         state->set_client_controller(this);
         state->perform();
 
+        // Delete pointer to the state after it's done doing its job.
         delete state;
     }
 
-    void Client_controller::start_communicating()
-    {
+    void Client_controller::start_communicating() {
         // Create new network client
         delete this->network_client;
         this->network_client = new Network_client(this->ip, this->port);
 
-        // Wait for transmission
+        // Wait for transmission.
         long int next_transmission = this->transmission_frequency + this->last_transmission;
 
         if (next_transmission > time(NULL)) {
@@ -96,7 +95,7 @@ namespace RADS_client {
             sleep_for(seconds(waiting_time));
         }
 
-        // Check data limits
+        // Check data limits.
         int result = 0;
         int tries = 0;
         cout << "Client controller: So far sent " << this->data_sent_bytes << " bytes in the current period." << endl;
@@ -112,14 +111,14 @@ namespace RADS_client {
             tries++;
         } while (result != 0);
 
-        // Set state to connecting and then sending
+        // Set state to connecting and then sending.
         this->set_state(CONNECTING);
         this->perform();
 
         this->set_state(SENDING);
         this->perform();
 
-        // Set last transmission date
+        // Set last transmission time to now.
         this->last_transmission = time(NULL);
     }
 
@@ -131,8 +130,7 @@ namespace RADS_client {
         cout << "Client controller: Cleared readings from the memory" << endl;
     }
 
-    void Client_controller::start_reading()
-    {
+    void Client_controller::start_reading() {
         this->set_state(READING);
         this->perform();
     }
@@ -145,30 +143,40 @@ namespace RADS_client {
         return this->sensor_readers;
     }
 
-    void Client_controller::add_bytes_sent(int bytes)
-    {
+    void Client_controller::add_bytes_sent(int bytes) {
         this->data_sent_bytes += bytes;
     }
 
     Reading_data* Client_controller::get_reading_data() {
+        // Construct vector of readings from all the sensors mixed all together.
         vector<Sensor*> data;
+
+        // Variables for the first and last reading time.
         time_t min_time = 0;
         time_t max_time = 0;
 
+        // Loop through all the sensor readers.
         for (Sensor_reader *sensor_reader : this->sensor_readers) {
+            
+            // Loop through all the readings for the particular sensor reader.
             for (Sensor *sensor : sensor_reader->get_readings()) {
-                if (!min_time || sensor->get_datetime() < min_time) {
+
+                // Find out the minimum time of readings
+                if (min_time == 0 || sensor->get_datetime() < min_time) {
                     min_time = sensor->get_datetime();
                 }
 
+                // Find out the maximum time of readings
                 if (sensor->get_datetime() > max_time) {
                     max_time = sensor->get_datetime();
                 }
 
+                // Add data from the sensor to the vector containing all the types of readings.
                 data.push_back(sensor);
             }
         }
 
+        // Construct new Reading_data container with the current readings.
         return new Reading_data(min_time, max_time, data);
     }
 
@@ -176,10 +184,11 @@ namespace RADS_client {
         this->current_state = state;
     }
 
-    int Client_controller::check_data_limitation()
-    {
+    int Client_controller::check_data_limitation() {
+        // Calculate time when the data limitations will be resetted.
         time_t reset_time = this->data_period_start_datetime + 60 * 60;
 
+        // If it's time for data limit reset...
         if (time(NULL) >= reset_time) {
             cout << "Client controller: Reset data throotling" << endl;
             this->data_period_start_datetime = time(NULL);
@@ -187,10 +196,12 @@ namespace RADS_client {
             return 0;
         }
 
+        // Return 1 if we are over limit.
         if (this->data_sent_bytes >= this->data_hourly_limit) {
             return 1;
         }
 
+        // We are not over the limit so return 0.
         return 0;
     }
 

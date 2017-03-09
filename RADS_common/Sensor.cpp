@@ -13,8 +13,11 @@ using std::time_t;
 
 namespace Readings {
     Sensor::Sensor() {
+        // Set reading time to now.
         this->datetime = std::time(NULL);
     }
+
+    Sensor::~Sensor() {}
 
     string Sensor::to_string() {
         ostringstream string_stream;

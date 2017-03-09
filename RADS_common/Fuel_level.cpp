@@ -8,15 +8,11 @@ using std::string;
 
 namespace Readings {
     namespace Fuel_level {
-        Fuel_level::Fuel_level(float fuel_level)
-        {
+        Fuel_level::Fuel_level(float fuel_level) {
             this->fuel_level = fuel_level;
         }
 
-
-        Fuel_level::~Fuel_level()
-        {
-        }
+        Fuel_level::~Fuel_level() {}
 
         string Fuel_level::get_sensor_data() {
             ostringstream stringStream;
@@ -24,8 +20,7 @@ namespace Readings {
             return stringStream.str();
         }
 
-        Sensor_type Fuel_level::get_sensor_type_int()
-        {
+        Sensor_type Fuel_level::get_sensor_type_int() {
             return FUEL_LEVEL_SENSOR;
         }
 

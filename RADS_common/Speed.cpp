@@ -8,15 +8,11 @@ using std::string;
 
 namespace Readings {
     namespace Speed {
-        Speed::Speed(float speed)
-        {
+        Speed::Speed(float speed) {
             this->speed = speed;
         }
 
-
-        Speed::~Speed()
-        {
-        }
+        Speed::~Speed() {}
 
         string Speed::get_sensor_data() {
             ostringstream stringStream;
@@ -28,8 +24,7 @@ namespace Readings {
             return "SPEED";
         }
         
-        Sensor_type Speed::get_sensor_type_int()
-        {
+        Sensor_type Speed::get_sensor_type_int() {
             return SPEED_SENSOR;
         }
     }

@@ -13,16 +13,12 @@ using Readings::GPS_position::GPS_position;
 
 namespace Readings {
     namespace GPS_position {
-        GPS_position_reader::GPS_position_reader()
-        {
-        }
+        GPS_position_reader::GPS_position_reader() {}
 
-
-        GPS_position_reader::~GPS_position_reader()
-        {
-        }
+        GPS_position_reader::~GPS_position_reader() {}
 
         void GPS_position_reader::read() {
+            // Generate random GPS readings.
             for (int i = 0; i < 10; i++) {
                 this->readings.push_back(new GPS_position(i % 180, i % 180, i % 180));
                 sleep_for(seconds(1));

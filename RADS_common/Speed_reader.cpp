@@ -13,14 +13,9 @@ using Readings::Speed::Speed;
 
 namespace Readings {
     namespace Speed {
-        Speed_reader::Speed_reader()
-        {
-        }
+        Speed_reader::Speed_reader() {}
 
-
-        Speed_reader::~Speed_reader()
-        {
-        }
+        Speed_reader::~Speed_reader() {}
 
         string Speed_reader::get_sensor_reader_name() {
             return "Speed sensor reader";
@@ -38,8 +33,6 @@ namespace Readings {
             }
         }
 
-        void Speed_reader::set_up() {
-
-        }
+        void Speed_reader::set_up() {}
     }
 }

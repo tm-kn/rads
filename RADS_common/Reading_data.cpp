@@ -19,15 +19,14 @@ using std::time_t;
 using std::vector;
 
 namespace Readings {
-    /**
-        Sort sensors by their reading date ascendingly.
-    */
+    ///
+    /// <summary>Sort readings by their reading time.</summary>
+    ///
     bool way_to_sort(Sensor* sensor_one, Sensor* sensor_two) {
         return sensor_one->get_datetime() < sensor_two->get_datetime();
     }
 
-    Reading_data::Reading_data(time_t start_datetime, time_t end_datetime, vector<Sensor*> sensor_data)
-    {
+    Reading_data::Reading_data(time_t start_datetime, time_t end_datetime, vector<Sensor*> sensor_data) {
         this->reading_start_datetime = start_datetime;
         this->reading_end_datetime = end_datetime;
         this->sensor_data = sensor_data;
@@ -35,10 +34,7 @@ namespace Readings {
         sort(this->sensor_data.begin(), this->sensor_data.end(), way_to_sort);
     }
 
-
-    Reading_data::~Reading_data()
-    {
-    }
+    Reading_data::~Reading_data() {}
 
     vector<Sensor*> Reading_data::get_data() {
         return this->sensor_data;
@@ -60,6 +56,8 @@ namespace Readings {
 
             size_t pos = 0;
             std::string token;
+
+            // Split string from LAT;LNG;ALT
             while ((pos = data_string.find(';')) != std::string::npos) {
                 tokens.push_back(data_string.substr(0, pos));
                 data_string.erase(0, pos + 1);
@@ -75,12 +73,15 @@ namespace Readings {
             Fuel_level::Fuel_level * fuel = new Fuel_level::Fuel_level(stof(data_string));
             fuel->set_datetime(packet.datetime);
             return fuel;
-;        }
+            ;
+        }
         else if (packet.data_type == TEMPERATURE_SENSOR) {
             vector<string> tokens;
 
             size_t pos = 0;
             std::string token;
+            
+            // Split string from SENSOR_NAME;TMP
             while ((pos = data_string.find(';')) != std::string::npos) {
                 tokens.push_back(data_string.substr(0, pos));
                 data_string.erase(0, pos + 1);

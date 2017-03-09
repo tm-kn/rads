@@ -15,6 +15,10 @@ using std::vector;
 using Readings::Reading_data;
 
 namespace RADS_server {
+    CLI_observer::CLI_observer() {}
+
+    CLI_observer::~CLI_observer() {}
+
     void CLI_observer::update()
     {
         cout << endl << endl << ">>>>>>>>>>>>>>>>>>>> Beggining of CLI Observer Update" << endl << endl;
@@ -35,14 +39,5 @@ namespace RADS_server {
 
         cout << endl << endl << "<<<<<<<<<<<<<<<<<<<< End of CLI Observer Update" << endl << endl;
 
-    }
-
-    CLI_observer::CLI_observer()
-    {
-    }
-
-
-    CLI_observer::~CLI_observer()
-    {
     }
 }

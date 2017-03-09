@@ -13,16 +13,12 @@ using Readings::Fuel_level::Fuel_level;
 
 namespace Readings {
     namespace Fuel_level {
-        Fuel_level_reader::Fuel_level_reader()
-        {
-        }
+        Fuel_level_reader::Fuel_level_reader() {}
 
-
-        Fuel_level_reader::~Fuel_level_reader()
-        {
-        }
+        Fuel_level_reader::~Fuel_level_reader() {}
 
         void Fuel_level_reader::read() {
+            // Generate random fuel level readings
             for (int i = 100; i >= 75; i--) {
                 this->readings.push_back(new Fuel_level(i));
                 sleep_for(seconds(1));
@@ -33,8 +29,6 @@ namespace Readings {
             return "Fuel level sensor reader";
         }
 
-        void Fuel_level_reader::set_up() {
-
-        }
+        void Fuel_level_reader::set_up() {}
     }
 }

@@ -13,14 +13,9 @@ using Readings::Temperature::Temperature;
 
 namespace Readings {
     namespace Temperature {
-        Temperature_sensor_reader::Temperature_sensor_reader()
-        {
-        }
+        Temperature_sensor_reader::Temperature_sensor_reader() {}
 
-
-        Temperature_sensor_reader::~Temperature_sensor_reader()
-        {
-        }
+        Temperature_sensor_reader::~Temperature_sensor_reader() {}
 
         void Temperature_sensor_reader::read() {
             for (int i = 0; i < 15; i++) {

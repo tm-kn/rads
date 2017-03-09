@@ -12,14 +12,9 @@ using std::this_thread::sleep_for;
 
 namespace RADS_client {
     namespace State {
-        Connecting::Connecting()
-        {
-        }
+        Connecting::Connecting() {}
 
-
-        Connecting::~Connecting()
-        {
-        }
+        Connecting::~Connecting() {}
 
         void Connecting::perform() {
             cout << "Client controller: Start connecting" << endl;

@@ -2,11 +2,12 @@
 
 #include "Network_client.h"
 
-Network_client::Network_client(string ip, int port)
-{
+Network_client::Network_client(string ip, int port) {
+    // Set IP and port.
     this->ip = ip;
     this->port = port;
 
+    // Initiate winsockets.
     WSADATA wsaData;
 
     this->iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -16,10 +17,7 @@ Network_client::Network_client(string ip, int port)
     }
 }
 
-
-Network_client::~Network_client()
-{
-}
+Network_client::~Network_client() {}
 
 int Network_client::create_client_socket() {
     struct addrinfo *result = NULL,
