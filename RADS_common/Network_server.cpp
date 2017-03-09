@@ -9,6 +9,9 @@ using std::endl;
 using std::vector;
 
 
+// Please note that Network_server::receive_data is implemented in the header file
+// since it's a template and compiler will fail if it's in this cpp file.
+
 Network_server::Network_server()
 {
     WSADATA wsaData;
@@ -27,7 +30,7 @@ Network_server::~Network_server()
 {
 }
 
-int Network_server::etablish_server_communication() {
+int Network_server::establish_server_communication() {
     if (this->create_socket() != 0) {
         return 1;
     }
@@ -121,29 +124,29 @@ void Network_server::accept_connections() {
 }
 
 int Network_server::accept_connection(unsigned int id) {
-    this->ClientSocket = INVALID_SOCKET;
+    SOCKET ClientSocket = INVALID_SOCKET;
 
     // Accept a client socket
-    this->ClientSocket = accept(this->ListenSocket, NULL, NULL);
+    ClientSocket = accept(this->ListenSocket, NULL, NULL);
 
-    if (this->ClientSocket == INVALID_SOCKET) {
+    if (ClientSocket == INVALID_SOCKET) {
         return 1;
     }
 
     //disable nagle on the client's socket
     char value = 1;
-    setsockopt(this->ClientSocket, IPPROTO_TCP, TCP_NODELAY, &value, sizeof(value));
+    setsockopt(ClientSocket, IPPROTO_TCP, TCP_NODELAY, &value, sizeof(value));
 
     // insert new client into session id table
-    sessions.insert(pair<unsigned int, SOCKET>(id, this->ClientSocket));
+    this->sessions.insert(pair<unsigned int, SOCKET>(id, ClientSocket));
 
     return 0;
 }
 
 int Network_server::receive_data_from_client(unsigned int id, char * recvbuf) {
-    if (sessions.find(id) != sessions.end())
+    if (this->sessions.find(id) != this->sessions.end())
     {
-        SOCKET currentSocket = sessions[id];
+        SOCKET currentSocket = this->sessions[id];
         this->iResult = recv(currentSocket, recvbuf, MAX_PACKET_SIZE, 0);
 
         if (this->iResult == 0)

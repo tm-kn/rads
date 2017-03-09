@@ -29,7 +29,7 @@ namespace Readings {
         string GPS_position::get_sensor_type() {
             return "GPS";
         }
-        int GPS_position::get_sensor_type_int()
+        Sensor_type GPS_position::get_sensor_type_int()
         {
             return GPS_POSITION_SENSOR;
         }

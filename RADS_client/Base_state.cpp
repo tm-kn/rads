@@ -5,14 +5,9 @@ using RADS_client::Client_controller;
 
 namespace RADS_client {
     namespace State {
-        Base::Base()
-        {
-        }
+        Base::Base() {}
 
-
-        Base::~Base()
-        {
-        }
+        Base::~Base() {}
 
         Client_controller* Base::get_client_controller() {
             return this->client_controller;

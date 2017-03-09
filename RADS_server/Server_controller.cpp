@@ -43,7 +43,7 @@ namespace RADS_server {
 
             sleep_for(seconds(5));
 
-            result = this->network_server->etablish_server_communication();
+            result = this->network_server->establish_server_communication();
         } while (result != 0);
 
         cout << "Server controller: Established server communication - ready to accept clients" << endl;

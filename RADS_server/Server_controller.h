@@ -12,7 +12,10 @@ using std::string;
 using std::vector;
 using Readings::Reading_data;
 
+// Please include Observer.h and Server_controller.h in all the files that want to use this class.
+
 namespace RADS_server {
+    // For cicular import sake.
     class Observer;
 
     class Server_controller
