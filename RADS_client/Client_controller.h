@@ -44,6 +44,12 @@ namespace RADS_client {
     public:
         ///
         /// <summary>Instantiate the class.</summary>
+        /// <param name="id">Ientifier of the client.</param>
+        /// <param name="sensor_readers">List of <see cref="Sensor_reader" /> instances.</param>
+        /// <param name="transmission_frequency">How many seconds must separate transmissions to the server.</param>
+        /// <param name="data_hourly_limit">Number of bytes that client can transmit maximum per hour.</param>
+        /// <param name="ip">IP address client is connecting to.</param>
+        /// <param name="port">Port number client is connecting to.</param>
         ///
         Client_controller(string id, vector<Sensor_reader*> sensor_readers,
             int transmission_frequency, int data_hourly_limit, string ip, int port);

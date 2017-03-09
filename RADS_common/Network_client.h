@@ -20,6 +20,10 @@ using std::string;
 class Network_client
 {
 public:
+    ///
+    /// <summary>Instantiate the object.</summary>
+    /// <param name="ip">IP address that client is connecting to.</param>
+    /// <param name="port">Port number that client is connecting to.</param>
     Network_client(string ip, int port);
     
     ~Network_client();

@@ -37,7 +37,7 @@ namespace RADS_client {
         // Set ID
         this->id = id;
 
-        // Set limitations 5MB per hour
+        // Set data limitations
         this->data_hourly_limit = data_hourly_limit;
         this->data_period_start_datetime = time(NULL);
         this->data_sent_bytes = 0;
