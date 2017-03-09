@@ -10,13 +10,8 @@
 #include "Connecting_state.h"
 #include "Reading_state.h"
 #include "Sending_state.h"
-#include "../RADS_common/Fuel_level_reader.h"
-#include "../RADS_common/GPS_position_reader.h"
-#include "../RADS_common/Reading_data.h"
+
 #include "../RADS_common/Sensor.h"
-#include "../RADS_common/Sensor_reader.h"
-#include "../RADS_common/Speed_reader.h"
-#include "../RADS_common/Temperature_sensor_reader.h"
 
 using std::chrono::seconds;
 using std::cout;
@@ -26,13 +21,7 @@ using std::ostringstream;
 using std::this_thread::sleep_for;
 using std::time;
 
-using Readings::Fuel_level::Fuel_level_reader;
-using Readings::GPS_position::GPS_position_reader;
-using Readings::Reading_data;
 using Readings::Sensor;
-using Readings::Sensor_reader;
-using Readings::Speed::Speed_reader;
-using Readings::Temperature::Temperature_sensor_reader;
 
 namespace RADS_client {
     Client_controller::Client_controller(string id, vector<Sensor_reader*> sensor_readers,

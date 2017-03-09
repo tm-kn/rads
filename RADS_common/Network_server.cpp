@@ -12,8 +12,11 @@ using std::vector;
 // Please note that Network_server::receive_data is implemented in the header file
 // since it's a template and compiler will fail if it's in this cpp file.
 
-Network_server::Network_server()
+Network_server::Network_server(string ip, int port)
 {
+    this->ip = ip;
+    this->port = port;
+
     WSADATA wsaData;
 
     // Initialize Winsock
@@ -58,7 +61,13 @@ int Network_server::create_socket() {
     hints.ai_flags = AI_PASSIVE;
 
     // Resolve the local address and port to be used by the server
-    this->iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &this->result);
+    char ip[50];
+    char port[50];
+
+    strcpy_s(ip, sizeof ip, this->ip.c_str());
+    _itoa_s(this->port, port, 10);
+
+    this->iResult = getaddrinfo(ip, port, &hints, &this->result);
     if (this->iResult != 0) {
         printf("Network Server: getaddrinfo failed: %d\n", this->iResult);
         //WSACleanup();

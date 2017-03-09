@@ -7,7 +7,6 @@
 #include <ws2tcpip.h>
 
 #define DEFAULT_BUFLEN 512
-#define DEFAULT_PORT "6881"
 
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
@@ -25,7 +24,12 @@ using std::pair;
 class Network_server
 {
 public:
-    Network_server();
+    ///
+    /// <summary>Instantiate Network_server.</summary>
+    /// <param name="ip">IP address</param>
+    /// <param name="port">Port number</param>
+    ///
+    Network_server(string ip, int port);
 
     ~Network_server();
 
@@ -79,6 +83,16 @@ private:
     /// <summary>Socket used to listen on connections comming from the clients.</summary>
     ///
     SOCKET ListenSocket;
+
+    ///
+    /// <summary>IP address.</summary>
+    ///
+    string ip;
+
+    ///
+    /// <summary>Port number</summary>
+    ///
+    int port;
 
     ///
     /// <summary>Pointer required to share data between class methods, for the sake of winsocks implementation.</summary>

@@ -21,7 +21,7 @@ namespace RADS_server {
     class Server_controller
     {
     public:
-        Server_controller();
+        Server_controller(string ip, int port, vector<Observer*> observers);
         ~Server_controller();
         map<string, vector<Reading_data>> get_reading_data();
         map<string, time_t> get_last_reading_datetimes();
@@ -32,6 +32,8 @@ namespace RADS_server {
         vector<Observer*> observers;
         Network_server * network_server;
         map<string, time_t> last_reading_datetimes;
+        string ip;
+        int port;
         void check_last_reading_datetimes();
         void notify_observers();
         void add_to_reading_data(string, Reading_data reading_data);

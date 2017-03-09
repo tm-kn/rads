@@ -6,8 +6,6 @@
 
 #include "Server_controller.h"
 #include "Observer.h"
-#include "CLI_observer.h"
-#include "File_writer_observer.h"
 
 using std::chrono::seconds;
 using std::cout;
@@ -18,12 +16,20 @@ using std::this_thread::sleep_for;
 using std::vector;
 
 namespace RADS_server {
-    Server_controller::Server_controller()
+    Server_controller::Server_controller(string ip, int port, vector<Observer*> observers)
     {
-        this->network_server = new Network_server();
+        // Set networking details
+        this->ip = ip;
+        this->port = port;
+        this->network_server = new Network_server(ip, port);
 
-        this->add_observer(new CLI_observer());
-        this->add_observer(new File_writer_observer());
+        // Add observers
+        for (Observer * observer : observers) {
+            this->add_observer(observer);
+        }
+
+        cout << "Server controller: IP address set to " << this->ip << "." << endl;
+        cout << "Server controller: Port number set to " << this->port << "." << endl << endl;
     }
 
 
