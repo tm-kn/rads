@@ -101,7 +101,7 @@ namespace RADS_server {
         ///
         /// <summary>Add new data to the reading data.</summary>
         /// <param name="sender_id">Sender ID</param>
-        /// <param name="reading_data"><see cref"Reading_data" /> object.</param>
+        /// <param name="reading_data"><see cref="Reading_data" /> object.</param>
         ///
         void add_to_reading_data(string sender_id, Reading_data reading_data);
 

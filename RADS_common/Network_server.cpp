@@ -60,7 +60,6 @@ int Network_server::create_socket() {
     // Resolve the local address and port to be used by the server
     char ip[50];
     char port[50];
-
     strcpy_s(ip, sizeof ip, this->ip.c_str());
     _itoa_s(this->port, port, 10);
 
