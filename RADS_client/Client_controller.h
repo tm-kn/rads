@@ -45,7 +45,9 @@ namespace RADS_client {
         ///
         /// <summary>Instantiate the class.</summary>
         ///
-        Client_controller();
+        Client_controller(string id, vector<Sensor_reader*> sensor_readers,
+            int transmission_frequency, int data_hourly_limit, string ip, int port);
+
         ~Client_controller();
 
         ///
@@ -112,6 +114,16 @@ namespace RADS_client {
         /// <summary>Client's identifier that is sent together with all the data.</summary>
         ///
         string id;
+
+        ///
+        /// <summary>IP address.</summary>
+        ///
+        string ip;
+
+        ///
+        /// <summary>Port number.</summary>
+        ///
+        int port;
         
         ///
         /// <summary>Number of seconds that determine how often client is able transmit data to the server.</summary>

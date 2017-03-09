@@ -2,8 +2,11 @@
 
 #include "Network_client.h"
 
-Network_client::Network_client()
+Network_client::Network_client(string ip, int port)
 {
+    this->ip = ip;
+    this->port = port;
+
     WSADATA wsaData;
 
     this->iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -32,7 +35,12 @@ int Network_client::create_client_socket() {
     hints.ai_protocol = IPPROTO_TCP;
 
     // Resolve the server address and port
-    this->iResult = getaddrinfo(DEFAULT_IP, DEFAULT_PORT, &hints, &result);
+    char ip[50];
+    char port[50];
+    strcpy_s(ip, sizeof ip, this->ip.c_str());
+    _itoa_s(this->port, port, 10);
+ 
+    this->iResult = getaddrinfo(ip, port, &hints, &result);
     if (this->iResult != 0) {
         printf("Network Client: getaddrinfo failed: %d\n", this->iResult);
         WSACleanup();

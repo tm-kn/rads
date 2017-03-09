@@ -35,30 +35,33 @@ using Readings::Speed::Speed_reader;
 using Readings::Temperature::Temperature_sensor_reader;
 
 namespace RADS_client {
-    Client_controller::Client_controller()
-    {
+    Client_controller::Client_controller(string id, vector<Sensor_reader*> sensor_readers,
+        int transmission_frequency, int data_hourly_limit, string ip, int port) {
         // Add sensor readers
-        this->sensor_readers.push_back(new GPS_position_reader());
-        this->sensor_readers.push_back(new Temperature_sensor_reader());
-        this->sensor_readers.push_back(new Fuel_level_reader());
-        this->sensor_readers.push_back(new Speed_reader());
+        for (Sensor_reader * reader : sensor_readers) {
+            this->sensor_readers.push_back(reader);
+        }
         
-        // Set transmission frequency to 60 seconds
-        this->transmission_frequency = 60;
-
-        // Generate random ID
-        const void * address = static_cast<const void*>(this);
-        ostringstream string_stream;
-        string_stream << address;
-        this->id = string_stream.str();
+        // Set transmission frequency
+        this->transmission_frequency = transmission_frequency;
+        
+        // Set ID
+        this->id = id;
 
         // Set limitations 5MB per hour
-        this->data_hourly_limit = 5 * 1024 * 1024;
+        this->data_hourly_limit = data_hourly_limit;
         this->data_period_start_datetime = time(NULL);
         this->data_sent_bytes = 0;
+
+        // Set IP and port
+        this->ip = ip;
+        this->port = port;
           
+        cout << "Client controller: Using IP Address " << this->ip << endl;
+        cout << "Client controller: Using port " << this->port << endl;
+        cout << "Client controller: Transmision frequency set to " << this->transmission_frequency << " seconds." << endl;
         cout << "Client Controller: Sender ID set to " << this->id << endl;
-        cout << "Client Controller: Hourly data limitation set to " << this->data_hourly_limit << " bytes" << endl;
+        cout << "Client Controller: Hourly data limitation set to " << this->data_hourly_limit << " bytes" << endl << endl;
     }
 
     Client_controller::~Client_controller()
@@ -92,7 +95,7 @@ namespace RADS_client {
     {
         // Create new network client
         delete this->network_client;
-        this->network_client = new Network_client();
+        this->network_client = new Network_client(this->ip, this->port);
 
         // Wait for transmission
         long int next_transmission = this->transmission_frequency + this->last_transmission;

@@ -3,15 +3,16 @@
 #include <winsock2.h>
 #include <Windows.h>
 #include <ws2tcpip.h>
+#include <string>
 
 #include "Network_data.h"
 
 #define DEFAULT_BUFLEN 512
-#define DEFAULT_IP "127.0.0.1"
-#define DEFAULT_PORT "6881"
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
+
+using std::string;
 
 ///
 /// <summary>Wrapper around winsocks for the client-side.</summary>
@@ -19,7 +20,7 @@
 class Network_client
 {
 public:
-    Network_client();
+    Network_client(string ip, int port);
     
     ~Network_client();
 
@@ -43,6 +44,16 @@ public:
     ///
     int disconnect_client();
 private:
+    ///
+    /// <summary>IP address.</summary>
+    ///
+    string ip;
+
+    ///
+    /// <summary>Port number.</summary>
+    ///
+    int port;
+
     ///
     /// <summary>Pointer required to be shared within the class for the sake of winsockets implementation.</summary>
     ///

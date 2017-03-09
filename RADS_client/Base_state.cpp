@@ -9,11 +9,11 @@ namespace RADS_client {
 
         Base::~Base() {}
 
-        Client_controller* Base::get_client_controller() {
+        Client_controller * Base::get_client_controller() {
             return this->client_controller;
         }
 
-        void Base::set_client_controller(Client_controller* client_controller) {
+        void Base::set_client_controller(Client_controller * client_controller) {
             this->client_controller = client_controller;
         }
     }
