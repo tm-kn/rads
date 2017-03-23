@@ -1,4 +1,5 @@
 #include <chrono>
+#include <random>
 #include <string>
 #include <thread>
 
@@ -6,6 +7,7 @@
 #include "Speed_reader.h"
 
 using std::chrono::seconds;
+using std::rand;
 using std::string;
 using std::this_thread::sleep_for;
 
@@ -22,13 +24,22 @@ namespace Readings {
         }
 
         void Speed_reader::read() {
-            for (int i = 0; i <= 10; i++) {
-                this->readings.push_back(new Speed(i));
-                sleep_for(seconds(1));
-            }
+            // Speeds of 120 - 200 for initial reading.
+            const float initial_speed = static_cast <float> ((rand() / static_cast <float> (RAND_MAX/80)) + 120);
+            float random_speed = initial_speed;
 
-            for (int i = 10; i >= 0; i--) {
-                this->readings.push_back(new Speed(i));
+            // Add ten records
+            for (int i = 0; i <= 10; i++) {
+                if (i % 3 == 0) {
+                    // Decrease by max 5
+                    random_speed -= static_cast <float> (rand() / static_cast <float> (RAND_MAX / 5));
+                }
+                else {
+                    // Increase max by 2
+                    random_speed += static_cast <float> (rand() / static_cast <float> (RAND_MAX / 2));
+                }
+
+                this->readings.push_back(new Speed(random_speed));
                 sleep_for(seconds(1));
             }
         }

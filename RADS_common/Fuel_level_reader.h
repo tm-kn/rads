@@ -35,6 +35,11 @@ namespace Readings {
             /// <returns>String with sensor reader's name.</returns>
             ///
             string get_sensor_reader_name();
+        private:
+            ///
+            /// <summary>Last reading of the sensor.</summary>
+            ///
+            static float last_reading;
         };
     }
 }
