@@ -1,9 +1,11 @@
 #pragma once
 
 #include <string>
+#include <map>
 
 #include "Sensor_reader.h"
 
+using std::map;
 using std::string;
 
 using Readings::Sensor_reader;
