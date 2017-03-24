@@ -10,8 +10,7 @@
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
 
-// TODO: reference additional headers your program requires here
-
+// Sensor_type enum in tests
 #include <wchar.h>
 #include "../RADS_common/Sensor.h"
 using std::wstring;
